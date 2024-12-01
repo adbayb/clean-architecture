@@ -1,0 +1,41 @@
+{
+	"name": "@clean-architecture/product-listing",
+	"description": "A clean architecture example to enforce a loosely coupled business logic.",
+	"version": "0.0.0",
+	"private": true,
+	"files": [
+		"dist"
+	],
+	"sideEffects": false,
+	"type": "module",
+	"exports": {
+		".": {
+			"source": "./src/index.ts",
+			"types": "./dist/index.d.ts",
+			"require": "./dist/index.cjs",
+			"import": "./dist/index.mjs",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"license": "MIT",
+	"author": "Ayoub Adib <adbayb@gmail.com> (https://twitter.com/adbayb)",
+	"bugs": "https://github.com/adbayb/clean-architecture/issues",
+	"homepage": "https://github.com/adbayb/clean-architecture/tree/main/clean-architecture#readme",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:adbayb/clean-architecture.git",
+		"directory": "libraries/clean-architecture"
+	},
+	"scripts": {
+		"prepublishOnly": "pnpm build",
+		"clean": "rm -rf dist",
+		"start": "pnpm watch",
+		"build": "pnpm clean && quickbundle build",
+		"watch": "quickbundle watch",
+		"test": "vitest"
+	},
+	"devDependencies": {
+		"quickbundle": "2.8.0",
+		"vitest": "2.1.5"
+	}
+}

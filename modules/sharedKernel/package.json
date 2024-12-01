@@ -1,10 +1,8 @@
 {
-	"name": "clean-architecture",
+	"name": "@clean-architecture/shared-kernel",
 	"description": "A clean architecture example to enforce a loosely coupled business logic.",
 	"version": "0.0.0",
-	"publishConfig": {
-		"access": "public"
-	},
+	"private": true,
 	"files": [
 		"dist"
 	],
@@ -33,11 +31,9 @@
 		"clean": "rm -rf dist",
 		"start": "pnpm watch",
 		"build": "pnpm clean && quickbundle build",
-		"watch": "quickbundle watch",
-		"test": "vitest"
+		"watch": "quickbundle watch"
 	},
 	"devDependencies": {
-		"quickbundle": "2.8.0",
-		"vitest": "2.1.5"
+		"quickbundle": "2.8.0"
 	}
 }
