@@ -31,9 +31,11 @@
 		"clean": "rm -rf dist",
 		"start": "pnpm watch",
 		"build": "pnpm clean && quickbundle build",
-		"watch": "quickbundle watch"
+		"watch": "quickbundle watch",
+		"test": "vitest"
 	},
 	"devDependencies": {
-		"quickbundle": "2.8.0"
+		"quickbundle": "2.8.0",
+		"vitest": "2.1.5"
 	}
 }

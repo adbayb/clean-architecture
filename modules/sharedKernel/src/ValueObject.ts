@@ -1,4 +1,5 @@
 import type { AnyRecord } from "./types";
+import type { Result } from "./Result";
 
 /**
  * A value object abstract class to inherit value object behavior.
@@ -16,17 +17,24 @@ import type { AnyRecord } from "./types";
  * Every formal validations must happen at value object construction time.
  */
 export const ValueObject = {
-	create<Value extends AnyRecord>(
-		input: Value,
-		isValid: (input: Value) => boolean,
-	): { equals: (input: AnyRecord) => boolean; value: Value | null } {
-		const value = isValid(input) ? input : null;
+	create<Value extends Result<unknown, unknown>>(
+		getValue: () => Value,
+	): { equals: (input: AnyRecord) => boolean; value: Value } {
+		const value = getValue();
 
 		return {
 			equals(equalsInput) {
-				return JSON.stringify(equalsInput) === JSON.stringify(value);
+				return (
+					JSON.stringify(equalsInput) === JSON.stringify(value.value)
+				);
 			},
 			value,
 		};
 	},
 };
+
+/*
+ * const Address = ValueObject.create(() => {
+ * 	return Result.success({ postalCode: 78370 });
+ * });
+ */
