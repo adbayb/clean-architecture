@@ -1,7 +1,7 @@
 <br>
 <div align="center">
     <h1>📦 clean-architecture</h1>
-    <strong>A clean architecture example to enforce a loosely coupled business logic.</strong>
+    <strong>A clean architecture example to enforce a loosely coupled business logic</strong>
 </div>
 <br>
 <br>

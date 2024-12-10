@@ -1,3 +1,6 @@
+import { isNullOrUndefined } from "./isNullOrUndefined";
+import { DomainObject } from "./DomainObject";
+
 /**
  * [Value Objects](https://en.wikipedia.org/wiki/Value_object) are immutable entities whose value is completely determined by their attributes.
  * They encapsulate data related to a specific concept, such as color, address, phone number, price, etc.
@@ -15,18 +18,21 @@
  * A Value Object must check for the consistency of its values.
  * Every formal validations must happen at value object construction time.
  */
-export abstract class ValueObject<Value> {
+export abstract class ValueObject<Value> extends DomainObject {
 	public readonly value: Value;
 
 	public static create(_: unknown) {
-		throw new Error("Must be implemented");
+		throw new Error("NotImplementedException");
 	}
 
 	protected constructor(input: Value) {
+		super();
 		this.value = Object.freeze(input); // Immutability is enforced via read-only type and mutation lock (Object.freeze).
 	}
 
-	public equals(input: unknown) {
+	public override equals(input: unknown) {
+		if (isNullOrUndefined(input)) return false;
+
 		if (this === input) return true;
 
 		return JSON.stringify(this) === JSON.stringify(input);

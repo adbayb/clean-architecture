@@ -21,7 +21,7 @@ importers:
         specifier: 2.1.8
         version: 2.1.8(@types/node@22.9.1)
 
-  modules/sharedKernel:
+  modules/shared-kernel:
     dependencies:
       '@open-vanilla/result':
         specifier: ^2.0.0

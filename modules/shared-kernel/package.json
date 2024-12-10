@@ -1,5 +1,5 @@
 {
-	"name": "@clean-architecture/product-listing",
+	"name": "@clean-architecture/shared-kernel",
 	"version": "0.0.0",
 	"private": true,
 	"description": "A clean architecture example to enforce a loosely coupled business logic",
@@ -8,7 +8,7 @@
 	"repository": {
 		"type": "git",
 		"url": "git@github.com:adbayb/clean-architecture.git",
-		"directory": "modules/product-listing"
+		"directory": "modules/shared-kernel"
 	},
 	"license": "MIT",
 	"author": "Ayoub Adib <adbayb@gmail.com> (https://twitter.com/adbayb)",
@@ -33,6 +33,9 @@
 		"start": "pnpm watch",
 		"test": "vitest --typecheck --reporter=verbose",
 		"watch": "quickbundle watch"
+	},
+	"dependencies": {
+		"@open-vanilla/result": "^2.0.0"
 	},
 	"devDependencies": {
 		"quickbundle": "2.8.0",
