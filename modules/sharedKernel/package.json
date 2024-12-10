@@ -32,10 +32,13 @@
 		"start": "pnpm watch",
 		"build": "pnpm clean && quickbundle build",
 		"watch": "quickbundle watch",
-		"test": "vitest"
+		"test": "vitest --typecheck --reporter=verbose"
+	},
+	"dependencies": {
+		"@open-vanilla/result": "^2.0.0"
 	},
 	"devDependencies": {
 		"quickbundle": "2.8.0",
-		"vitest": "2.1.5"
+		"vitest": "2.1.8"
 	}
 }
