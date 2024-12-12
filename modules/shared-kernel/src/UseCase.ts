@@ -1,5 +1,11 @@
-export abstract class UseCaseInteractor<RequestModel, ResponseModel>
-	implements UseCaseInputPort<RequestModel>
+import type { Result } from "@open-vanilla/result";
+
+import type { DataTransferObject } from "./DataTransferObject";
+
+export abstract class UseCaseInteractor<
+	RequestModel extends DataTransferObject,
+	ResponseModel extends Result<unknown>,
+> implements UseCaseInputPort<RequestModel>
 {
 	public constructor(
 		protected readonly presenter: UseCaseOutputPort<ResponseModel>,
@@ -12,7 +18,7 @@ export type UseCaseInputPort<RequestModel> = {
 	execute: (requestModel: RequestModel) => Promise<void> | void;
 };
 
-export type UseCaseOutputPort<ResponseModel> = {
+export type UseCaseOutputPort<ResponseModel extends Result<unknown>> = {
 	/**
 	 * Error presentation handler.
 	 * @param responseModel - The contextual error response model.

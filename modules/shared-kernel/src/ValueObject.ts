@@ -47,9 +47,9 @@ export abstract class ValueObject<Value> extends DomainObject {
  *export class Address extends ValueObject<AddressValue> {
  *	public static override create(input: AddressValue) {
  *		if (input.country === "Morocco")
- *			return Result.failure("Country not yet supported");
+ *			return failure("Country not yet supported");
  *
- *		return Result.success(new Address(input));
+ *		return success(new Address(input));
  *	}
  *}
  *
