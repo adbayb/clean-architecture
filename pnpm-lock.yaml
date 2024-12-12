@@ -22,11 +22,10 @@ importers:
         version: 2.1.8(@types/node@22.9.1)
 
   modules/shared-kernel:
-    dependencies:
+    devDependencies:
       '@open-vanilla/result':
         specifier: ^2.0.0
         version: 2.0.0
-    devDependencies:
       quickbundle:
         specifier: 2.8.0
         version: 2.8.0(typescript@5.7.2)

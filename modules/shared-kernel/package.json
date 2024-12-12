@@ -34,10 +34,8 @@
 		"test": "vitest --typecheck --reporter=verbose",
 		"watch": "quickbundle watch"
 	},
-	"dependencies": {
-		"@open-vanilla/result": "^2.0.0"
-	},
 	"devDependencies": {
+		"@open-vanilla/result": "^2.0.0",
 		"quickbundle": "2.8.0",
 		"vitest": "2.1.8"
 	}
