@@ -1,13 +1,12 @@
 import { failure, success } from "@open-vanilla/result";
-import type { Result } from "@open-vanilla/result";
 
-import { ViewModel } from "./ViewModel";
+import type { ViewModel } from "./ViewModel";
 import { UseCaseInteractor } from "./UseCase";
+import type { ResponseModel } from "./ResponseModel";
+import type { RequestModel } from "./RequestModel";
 import { Presenter } from "./Presenter";
-import type { DataTransferObject } from "./DataTransferObject";
 import { Controller } from "./Controller";
 
-export type { DataTransferObject } from "./DataTransferObject";
 export { Entity } from "./Entity";
 export { ValueObject } from "./ValueObject";
 export type { Result } from "./Result";
@@ -16,18 +15,18 @@ export { UseCaseInteractor } from "./UseCase";
 export { Controller } from "./Controller";
 export { Presenter } from "./Presenter";
 
-type GetQuoteRequestModel = DataTransferObject<{
+type GetQuoteRequestModel = RequestModel<{
 	id: string;
 }>;
 
-type GetQuoteResponseModel = Result<{
+type GetQuoteResponseModel = ResponseModel<{
 	content: string;
 }>;
 
-type GetQuoteViewModelValue = {
+type GetQuoteViewModel = ViewModel<{
 	data?: string;
 	error?: Error;
-};
+}>;
 
 class GetQuoteUseCase extends UseCaseInteractor<
 	GetQuoteRequestModel,
@@ -52,11 +51,11 @@ class GetQuoteUseCase extends UseCaseInteractor<
 
 class GetQuotePresenter extends Presenter<
 	GetQuoteResponseModel,
-	GetQuoteViewModelValue
+	GetQuoteViewModel
 > {
-	public override toViewModelValue(
+	public override toViewModel(
 		responseModel: GetQuoteResponseModel,
-	): GetQuoteViewModelValue {
+	): GetQuoteViewModel {
 		if (responseModel.type === "failure") {
 			return {
 				error: responseModel.payload,
@@ -72,8 +71,7 @@ class GetQuotePresenter extends Presenter<
 class GetQuoteController extends Controller<GetQuoteRequestModel> {}
 
 // Drafted control flow following [Clean architecture diagram (from the book)](https://i.sstatic.net/K44FQ.jpg):
-const viewModel = new ViewModel<GetQuoteViewModelValue>({}, console.log);
-const presenter = new GetQuotePresenter(viewModel);
+const presenter = new GetQuotePresenter({}, console.log);
 const useCase = new GetQuoteUseCase(presenter);
 const controller = new GetQuoteController(useCase);
 

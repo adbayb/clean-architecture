@@ -2,7 +2,6 @@ import type { Result } from "@open-vanilla/result";
 
 import type { ViewModel } from "./ViewModel";
 import type { UseCaseOutputPort } from "./UseCase";
-import type { DataTransferObject } from "./DataTransferObject";
 
 /**
  * A presenter maps data structures returned by the use case interactor into data structures most convenient for the view.
@@ -11,37 +10,39 @@ import type { DataTransferObject } from "./DataTransferObject";
  * @example
  */
 export abstract class Presenter<
-	ResponseModel extends Result<unknown>,
-	ViewModelValue extends DataTransferObject,
-> implements UseCaseOutputPort<ResponseModel>
+	RM extends Result<unknown>,
+	VM extends ViewModel,
+> implements UseCaseOutputPort<RM>
 {
-	public constructor(private readonly viewModel: ViewModel<ViewModelValue>) {}
+	public constructor(
+		protected viewModel: VM,
+		protected onViewModelChange: (vm: VM) => void,
+	) {}
 
-	private setViewModelValue(responseModel: ResponseModel) {
-		this.viewModel.value = this.toViewModelValue(responseModel);
+	private setViewModel(responseModel: RM) {
+		this.viewModel = this.toViewModel(responseModel);
+		this.onViewModelChange(this.viewModel);
 	}
 
-	public error(responseModel: ResponseModel) {
+	public error(responseModel: RM) {
 		if (responseModel.type !== "failure") {
 			throw new RangeError(
 				"Attempting to convert a success result into an error view model value",
 			);
 		}
 
-		this.setViewModelValue(responseModel);
+		this.setViewModel(responseModel);
 	}
 
-	public ok(responseModel: ResponseModel) {
+	public ok(responseModel: RM) {
 		if (responseModel.type !== "success") {
 			throw new RangeError(
 				"Attempting to convert a failure result into a success view model value",
 			);
 		}
 
-		this.setViewModelValue(responseModel);
+		this.setViewModel(responseModel);
 	}
 
-	public abstract toViewModelValue(
-		responseModel: ResponseModel,
-	): ViewModelValue;
+	public abstract toViewModel(responseModel: RM): VM;
 }
