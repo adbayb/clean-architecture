@@ -2,14 +2,11 @@ import { isNullOrUndefined } from "./isNullOrUndefined";
 import { Identifier } from "./Identifier";
 import { DomainObject } from "./DomainObject";
 
-export abstract class Entity<
-	Id extends Identifier = Identifier,
-> extends DomainObject {
-	public id: Id;
-
-	protected constructor(id?: Id) {
+export abstract class Entity extends DomainObject {
+	public constructor(
+		public id: Identifier = Identifier.create(crypto.randomUUID()),
+	) {
 		super();
-		this.id = id ?? (Identifier.create(crypto.randomUUID()) as Id);
 	}
 
 	public override equals(input: unknown) {

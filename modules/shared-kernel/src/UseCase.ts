@@ -1,5 +1,6 @@
 import type { Result } from "@open-vanilla/result";
 
+import type { EntityGateway } from "./EntityGateway";
 import type { DataTransferObject } from "./DataTransferObject";
 
 export abstract class UseCaseInteractor<
@@ -8,6 +9,7 @@ export abstract class UseCaseInteractor<
 > implements UseCaseInputPort<RequestModel>
 {
 	public constructor(
+		protected readonly entityGateway: EntityGateway,
 		protected readonly presenter: UseCaseOutputPort<ResponseModel>,
 	) {}
 
