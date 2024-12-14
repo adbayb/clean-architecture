@@ -14,6 +14,9 @@ importers:
 
   modules/catalog:
     devDependencies:
+      '@clean-architecture/shared-kernel':
+        specifier: workspace:*
+        version: link:../shared-kernel
       quickbundle:
         specifier: 2.8.0
         version: 2.8.0(typescript@5.7.2)

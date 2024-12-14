@@ -23,7 +23,9 @@ import type { DomainObject } from "./DomainObject";
 export abstract class ValueObject<Value> implements DomainObject {
 	public readonly value: Value;
 
-	public static create(..._: unknown[]): Result<unknown> {
+	public static create(
+		..._: unknown[]
+	): Result<ValueObject<unknown>> | ValueObject<unknown> {
 		throw new Error("NotImplementedException");
 	}
 
@@ -40,22 +42,3 @@ export abstract class ValueObject<Value> implements DomainObject {
 		return JSON.stringify(this) === JSON.stringify(input);
 	}
 }
-
-/*
- *type AddressValue = {
- *	country: "France" | "Morocco";
- *};
- *
- *export class Address extends ValueObject<AddressValue> {
- *	public static override create(input: AddressValue) {
- *		if (input.country === "Morocco")
- *			return failure("Country not yet supported");
- *
- *		return success(new Address(input));
- *	}
- *}
- *
- *const result = Address.create({ country: "France" });
- *
- *result.type === "success" ? result.payload.value.country : result.payload;
- */

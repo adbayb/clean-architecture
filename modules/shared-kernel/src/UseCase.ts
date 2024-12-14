@@ -6,10 +6,11 @@ import type { DataTransferObject } from "./DataTransferObject";
 export abstract class UseCaseInteractor<
 	RequestModel extends DataTransferObject,
 	ResponseModel extends Result<unknown>,
+	Gateway extends EntityGateway,
 > implements UseCaseInputPort<RequestModel>
 {
 	public constructor(
-		protected readonly entityGateway: EntityGateway,
+		protected readonly entityGateway: Gateway,
 		protected readonly presenter: UseCaseOutputPort<ResponseModel>,
 	) {}
 
