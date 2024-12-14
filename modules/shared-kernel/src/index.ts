@@ -10,6 +10,7 @@ import type { EntityGateway } from "./EntityGateway";
 import { Entity } from "./Entity";
 import { Controller } from "./Controller";
 
+export { Guard } from "./Guard";
 export { Entity } from "./Entity";
 export type { EntityGateway } from "./EntityGateway";
 export { ValueObject } from "./ValueObject";

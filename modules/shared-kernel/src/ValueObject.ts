@@ -1,4 +1,4 @@
-import { isNullOrUndefined } from "./isNullOrUndefined";
+import { Guard } from "./Guard";
 import { DomainObject } from "./DomainObject";
 
 /**
@@ -31,9 +31,10 @@ export abstract class ValueObject<Value> extends DomainObject {
 	}
 
 	public override equals(input: unknown) {
-		if (isNullOrUndefined(input)) return false;
-
 		if (this === input) return true;
+
+		if (Guard.mustBeDefinedAndNotNull(input).type === "failure")
+			return false;
 
 		return JSON.stringify(this) === JSON.stringify(input);
 	}
