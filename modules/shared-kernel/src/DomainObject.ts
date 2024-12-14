@@ -1,3 +1,3 @@
-export abstract class DomainObject {
-	public abstract equals(input: unknown): boolean;
-}
+export type DomainObject = {
+	equals: (input: unknown) => boolean;
+};

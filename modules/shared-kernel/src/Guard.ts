@@ -18,4 +18,18 @@ export const Guard = {
 
 		return success(input);
 	},
+	mustBeLessThanCharacters<Input extends string>(
+		input: Input,
+		length: number,
+	) {
+		if (input.length >= length) {
+			return failure(
+				new TypeError(
+					`\`${String(input)}\` must be less than ${length} characters`,
+				),
+			);
+		}
+
+		return success(input);
+	},
 };

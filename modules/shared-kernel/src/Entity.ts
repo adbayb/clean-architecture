@@ -1,15 +1,20 @@
+import { unwrap } from "@open-vanilla/result";
+import type { Result } from "@open-vanilla/result";
+
 import { Identifier } from "./Identifier";
 import { Guard } from "./Guard";
-import { DomainObject } from "./DomainObject";
+import type { DomainObject } from "./DomainObject";
 
-export abstract class Entity extends DomainObject {
-	public constructor(
-		public id: Identifier = Identifier.create(crypto.randomUUID()),
-	) {
-		super();
+export abstract class Entity implements DomainObject {
+	protected constructor(
+		public id: Identifier = unwrap(Identifier.create(crypto.randomUUID())),
+	) {}
+
+	public static create(..._: unknown[]): Result<unknown> {
+		throw new Error("NotImplementedException");
 	}
 
-	public override equals(input: unknown) {
+	public equals(input: unknown) {
 		if (this === input) return true;
 
 		if (

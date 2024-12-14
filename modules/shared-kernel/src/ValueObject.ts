@@ -1,5 +1,7 @@
+import type { Result } from "@open-vanilla/result";
+
 import { Guard } from "./Guard";
-import { DomainObject } from "./DomainObject";
+import type { DomainObject } from "./DomainObject";
 
 /**
  * [Value Objects](https://en.wikipedia.org/wiki/Value_object) are immutable entities whose value is completely determined by their attributes.
@@ -18,19 +20,18 @@ import { DomainObject } from "./DomainObject";
  * A Value Object must check for the consistency of its values.
  * Every formal validations must happen at value object construction time.
  */
-export abstract class ValueObject<Value> extends DomainObject {
+export abstract class ValueObject<Value> implements DomainObject {
 	public readonly value: Value;
 
-	public static create(_: unknown) {
+	public static create(..._: unknown[]): Result<unknown> {
 		throw new Error("NotImplementedException");
 	}
 
 	protected constructor(input: Value) {
-		super();
 		this.value = Object.freeze(input); // Immutability is enforced via read-only type and mutation lock (Object.freeze).
 	}
 
-	public override equals(input: unknown) {
+	public equals(input: unknown) {
 		if (this === input) return true;
 
 		if (Guard.mustBeDefinedAndNotNull(input).type === "failure")

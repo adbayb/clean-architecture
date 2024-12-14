@@ -1,4 +1,5 @@
 import { ValueObject } from "./ValueObject";
+import { success } from "./Result";
 
 type IdentifierValue = string;
 
@@ -11,6 +12,6 @@ type IdentifierValue = string;
  */
 export class Identifier extends ValueObject<IdentifierValue> {
 	public static override create(input: IdentifierValue) {
-		return new Identifier(input);
+		return success(new Identifier(input));
 	}
 }
