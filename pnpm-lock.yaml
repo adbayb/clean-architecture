@@ -14,6 +14,9 @@ importers:
 
   hosts/web:
     dependencies:
+      '@clean-architecture/catalog':
+        specifier: workspace:^
+        version: link:../../modules/catalog
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -34,7 +37,7 @@ importers:
         specifier: 5.7.2
         version: 5.7.2
       vite:
-        specifier: ^6.0.3
+        specifier: 6.0.3
         version: 6.0.3(@types/node@22.9.1)(jiti@1.21.6)(yaml@2.6.1)
 
   modules/catalog:

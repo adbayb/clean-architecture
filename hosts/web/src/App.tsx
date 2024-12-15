@@ -1,3 +1,16 @@
+import {
+	CatalogDependencyInjection,
+	QuoteEntityGateway,
+} from "@clean-architecture/catalog";
+
+import { GetQuote } from "./GetQuote";
+
 export const App = () => {
-	return <p>Hello world</p>;
+	return (
+		<CatalogDependencyInjection
+			quoteEntityGateway={new QuoteEntityGateway()}
+		>
+			<GetQuote />
+		</CatalogDependencyInjection>
+	);
 };
