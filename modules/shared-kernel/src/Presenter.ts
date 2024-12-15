@@ -14,14 +14,10 @@ export abstract class Presenter<
 	VM extends ViewModel,
 > implements UseCaseOutputPort<RM>
 {
-	public constructor(
-		protected viewModel: VM,
-		protected onViewModelChange: (vm: VM) => void,
-	) {}
+	public constructor(protected onViewModelChange: (vm: VM) => void) {}
 
 	private setViewModel(responseModel: RM) {
-		this.viewModel = this.toViewModel(responseModel);
-		this.onViewModelChange(this.viewModel);
+		this.onViewModelChange(this.toViewModel(responseModel));
 	}
 
 	public error(responseModel: RM) {
