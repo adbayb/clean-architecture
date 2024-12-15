@@ -1,4 +1,5 @@
 import { failure, success } from "@open-vanilla/result";
+import type { Result } from "@open-vanilla/result";
 
 /**
  * A record exposing guard clauses.
@@ -7,27 +8,36 @@ import { failure, success } from "@open-vanilla/result";
  * @see https://deviq.com/design-patterns/guard-clause
  */
 export const Guard = {
-	mustBeDefinedAndNotNull<Input>(input: Input) {
+	against<Results extends Result<unknown>[]>(...results: Results) {
+		return results.find((guard) => {
+			return guard.type === "failure";
+		});
+	},
+	mustBeDefinedAndNonNull<Input>(input: Input) {
 		if (input === null || input === undefined) {
 			return failure(
 				new TypeError(
-					`\`${String(input)}\` must be defined and not null`,
+					`\`${String(input)}\` must be defined and non null`,
 				),
 			);
 		}
 
 		return success(input);
 	},
-	mustBeLessThanCharacters<Input extends string>(
-		input: Input,
-		length: number,
-	) {
+	mustBeLessThanCharacters(input: string, length: number) {
 		if (input.length >= length) {
 			return failure(
 				new TypeError(
-					`\`${String(input)}\` must be less than ${length} characters`,
+					`\`${input}\` must be less than ${length} characters`,
 				),
 			);
+		}
+
+		return success(input);
+	},
+	mustBeNonEmptyString(input: string) {
+		if (input.length === 0) {
+			return failure(new TypeError(`\`${input}\` must be non empty`));
 		}
 
 		return success(input);

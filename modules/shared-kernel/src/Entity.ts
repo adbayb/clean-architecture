@@ -18,7 +18,7 @@ export abstract class Entity implements DomainObject {
 
 		if (
 			!(input instanceof Entity) ||
-			Guard.mustBeDefinedAndNotNull(input).type === "failure"
+			Guard.mustBeDefinedAndNonNull(input).type === "failure"
 		)
 			return false;
 

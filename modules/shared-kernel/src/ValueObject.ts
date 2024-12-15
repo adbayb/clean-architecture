@@ -36,7 +36,7 @@ export abstract class ValueObject<Value> implements DomainObject {
 	public equals(input: unknown) {
 		if (this === input) return true;
 
-		if (Guard.mustBeDefinedAndNotNull(input).type === "failure")
+		if (Guard.mustBeDefinedAndNonNull(input).type === "failure")
 			return false;
 
 		return JSON.stringify(this) === JSON.stringify(input);

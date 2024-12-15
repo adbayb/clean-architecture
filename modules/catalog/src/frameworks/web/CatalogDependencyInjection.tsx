@@ -27,7 +27,7 @@ export const CatalogDependencyInjection = ({
 
 export const useCatalogDependencyInjection = () => {
 	const contextValue = useContext(CatalogDependencyInjectionContext);
-	const guardOutput = Guard.mustBeDefinedAndNotNull(contextValue);
+	const guardOutput = Guard.mustBeDefinedAndNonNull(contextValue);
 
 	if (guardOutput.type === "failure") {
 		throw guardOutput.payload;
