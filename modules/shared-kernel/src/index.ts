@@ -5,6 +5,7 @@ export { Guard } from "./Guard";
 export { IdValueObject } from "./IdValueObject";
 export { Presenter } from "./Presenter";
 export { UseCaseInteractor } from "./UseCase";
+export type { GetValueFromValueObject } from "./ValueObject";
 export { ValueObject } from "./ValueObject";
 export type { RequestModel } from "./RequestModel";
 export type { ResponseModel } from "./ResponseModel";

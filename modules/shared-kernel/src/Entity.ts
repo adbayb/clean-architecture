@@ -1,27 +1,37 @@
 import type { Result } from "@open-vanilla/result";
 
-import { IdValueObject } from "./IdValueObject";
+import type { GetValueFromValueObject } from "./ValueObject";
+import type { IdValueObject } from "./IdValueObject";
 import { Guard } from "./Guard";
 import type { DomainObject } from "./DomainObject";
 
-export abstract class Entity implements DomainObject {
-	protected constructor(
-		public id: IdValueObject = IdValueObject.create(crypto.randomUUID()),
-	) {}
+type EntityAttributes = { id: IdValueObject };
 
-	public static create(..._: unknown[]): Entity | Result<Entity> {
+export abstract class Entity<
+	Attributes extends EntityAttributes = EntityAttributes,
+> implements DomainObject
+{
+	protected constructor(public attributes: Attributes) {}
+
+	public static create(_input: {
+		id: GetValueFromValueObject<EntityAttributes["id"]>;
+	}): Entity | Result<Entity> {
 		throw new Error("NotImplementedException");
+	}
+
+	public static isInstanceOf(input: unknown): input is Entity {
+		return input instanceof Entity;
 	}
 
 	public equals(input: unknown) {
 		if (this === input) return true;
 
 		if (
-			!(input instanceof Entity) ||
+			!Entity.isInstanceOf(input) ||
 			Guard.mustBeDefinedAndNonNull(input).type === "failure"
 		)
 			return false;
 
-		return this.id.equals(input.id);
+		return this.attributes.id.equals(input.attributes.id);
 	}
 }

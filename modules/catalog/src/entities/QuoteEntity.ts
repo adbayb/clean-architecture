@@ -1,30 +1,52 @@
-import { Entity, Guard, success } from "@clean-architecture/shared-kernel";
-import type { IdValueObject } from "@clean-architecture/shared-kernel";
+import {
+	Entity,
+	Guard,
+	IdValueObject,
+	success,
+} from "@clean-architecture/shared-kernel";
+import type { GetValueFromValueObject } from "@clean-architecture/shared-kernel";
 
 import { CreatedAtValueObject } from "./CreatedAtValueObject";
-import type { AuthorValueObject } from "./AuthorValueObject";
+import { AuthorValueObject } from "./AuthorValueObject";
 
-export class QuoteEntity extends Entity {
-	public createdAt: CreatedAtValueObject;
+type QuoteEntityAttributes = {
+	id: IdValueObject;
+	author: AuthorValueObject;
+	content: string;
+	createdAt: CreatedAtValueObject;
+};
 
-	private constructor(
-		public override id: IdValueObject,
-		public author: AuthorValueObject,
-		public content: string,
-	) {
-		super(id);
-		this.createdAt = CreatedAtValueObject.create();
+type QuoteEntityCreateInput = GetValueFromValueObject<AuthorValueObject> &
+	Pick<QuoteEntityAttributes, "content"> & {
+		id: string;
+	};
+
+export class QuoteEntity extends Entity<QuoteEntityAttributes> {
+	private constructor(public override attributes: QuoteEntityAttributes) {
+		super(attributes);
 	}
 
-	public static override create(
-		id: IdValueObject,
-		author: AuthorValueObject,
-		content: string,
-	) {
-		const guardResult = Guard.mustBeLessThanCharacters(content, 280);
+	public static override create({
+		id,
+		content,
+		firstName,
+		lastName,
+	}: QuoteEntityCreateInput) {
+		const guardContentResult = Guard.mustBeLessThanCharacters(content, 280);
 
-		if (guardResult.type === "failure") return guardResult;
+		if (guardContentResult.type === "failure") return guardContentResult;
 
-		return success(new QuoteEntity(id, author, content));
+		const author = AuthorValueObject.create({ firstName, lastName });
+
+		if (author.type === "failure") return author;
+
+		return success(
+			new QuoteEntity({
+				id: IdValueObject.create(id),
+				author: author.payload,
+				content,
+				createdAt: CreatedAtValueObject.create(),
+			}),
+		);
 	}
 }

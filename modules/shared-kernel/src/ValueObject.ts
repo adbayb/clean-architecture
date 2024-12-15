@@ -12,7 +12,7 @@ import type { DomainObject } from "./DomainObject";
  * - No identity:
  * In contrast to an entity represented by a distinct identity through its whole lifespan, a value object has no conceptual identity but rather describe some characteristics of a thing.
  * A value object is defined by its attributes instead of an identifier and it can be thought of as a complex attribute of an entity.
- * Two value objects are equal if and only if all there attributes are equal (structural equality) in contrast to identifier equality for entities.
+ * Two value objects are equal if and only if all their attributes are equal (structural equality) in contrast to identifier and reference equality for entities.
  * - Immutability:
  * By its nature (a value object has no lifecycle), changing a value object attribute leads to the creation of a new instance instead of a mutation of the existing instance.
  * On the contrary, entities are almost always mutable.
@@ -24,7 +24,7 @@ export abstract class ValueObject<Value> implements DomainObject {
 	public readonly value: Value;
 
 	public static create(
-		..._: unknown[]
+		_input: GetValueFromValueObject<ValueObject<unknown>>,
 	): Result<ValueObject<unknown>> | ValueObject<unknown> {
 		throw new Error("NotImplementedException");
 	}
@@ -42,3 +42,6 @@ export abstract class ValueObject<Value> implements DomainObject {
 		return JSON.stringify(this) === JSON.stringify(input);
 	}
 }
+
+export type GetValueFromValueObject<Input extends ValueObject<unknown>> =
+	Input["value"];

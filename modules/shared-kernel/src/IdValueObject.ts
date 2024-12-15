@@ -10,7 +10,7 @@ type Value = string;
  * if they are both strings but impossible if they are represented through a dedicated type)).
  */
 export class IdValueObject extends ValueObject<Value> {
-	public static override create(input: Value) {
+	public static override create(input: Value = crypto.randomUUID()) {
 		return new IdValueObject(input);
 	}
 }
