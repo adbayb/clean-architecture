@@ -5,3 +5,5 @@
 </div>
 <br>
 <br>
+
+TODO (architecture diagram with control flow following [Clean architecture diagram (from the book)](https://i.sstatic.net/K44FQ.jpg)).

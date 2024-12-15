@@ -9,7 +9,7 @@ import type {
 	ResponseModel,
 } from "@clean-architecture/shared-kernel";
 
-import type { QuoteEntityGateway } from "../entities/QuoteEntityGateway";
+import type { QuoteEntityGatewayPort } from "../entities/QuoteEntityGatewayPort";
 
 export type GetQuoteRequestModel = RequestModel<{
 	id: string;
@@ -22,7 +22,7 @@ export type GetQuoteResponseModel = ResponseModel<{
 export class GetQuoteUseCase extends UseCaseInteractor<
 	GetQuoteRequestModel,
 	GetQuoteResponseModel,
-	QuoteEntityGateway
+	QuoteEntityGatewayPort
 > {
 	public override async execute(requestModel: GetQuoteRequestModel) {
 		const id = IdValueObject.create(requestModel.id);

@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import type { PropsWithChildren } from "react";
 import { Guard } from "@clean-architecture/shared-kernel";
 
-import type { QuoteEntityGateway } from "../../entities/QuoteEntityGateway";
+import type { QuoteEntityGateway } from "../../adapters/QuoteEntityGateway";
 
 type CatalogDependencyInjectionContextValue = {
 	readonly quoteEntityGateway: QuoteEntityGateway;
