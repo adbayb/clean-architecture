@@ -4,10 +4,10 @@ import { GetQuoteUseCase } from "../../useCases/GetQuoteUseCase";
 import type { GetQuoteViewModel } from "../../adapters/GetQuoteViewModel";
 import { GetQuotePresenter } from "../../adapters/GetQuotePresenter";
 import { GetQuoteController } from "../../adapters/GetQuoteController";
-import { useCatalogDependencyInjection } from "./CatalogDependencyInjection";
+import { useDependencyInjection } from "./useDependencyInjection";
 
 export const useGetQuote = () => {
-	const { quoteEntityGateway } = useCatalogDependencyInjection();
+	const { quoteEntityGateway } = useDependencyInjection();
 	const [viewModel, setViewModel] = useState<GetQuoteViewModel>({});
 	const presenter = useMemo(() => new GetQuotePresenter(setViewModel), []);
 

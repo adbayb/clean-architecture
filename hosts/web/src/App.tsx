@@ -1,5 +1,5 @@
 import {
-	CatalogDependencyInjection,
+	DependencyInjection as CatalogDependencyInjection,
 	QuoteEntityGateway,
 } from "@clean-architecture/catalog";
 
