@@ -1,2 +1,2 @@
 export { DependencyInjection } from "./useDependencyInjection";
-export { useGetQuote } from "./useGetQuote";
+export { GetQuoteView } from "./GetQuoteView";

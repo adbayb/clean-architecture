@@ -1,16 +1,12 @@
-import {
-	DependencyInjection as CatalogDependencyInjection,
-	QuoteEntityGateway,
-} from "@clean-architecture/catalog";
-
-import { GetQuote } from "./GetQuote";
+// eslint-disable-next-line import-x/no-namespace
+import * as Catalog from "@clean-architecture/catalog";
 
 export const App = () => {
 	return (
-		<CatalogDependencyInjection
-			quoteEntityGateway={new QuoteEntityGateway()}
+		<Catalog.DependencyInjection
+			quoteEntityGateway={new Catalog.QuoteEntityGateway()} // TODO: move it internally?
 		>
-			<GetQuote />
-		</CatalogDependencyInjection>
+			<Catalog.GetQuoteView />
+		</Catalog.DependencyInjection>
 	);
 };

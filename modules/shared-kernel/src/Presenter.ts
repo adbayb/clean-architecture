@@ -1,7 +1,6 @@
-import type { Result } from "@open-vanilla/result";
-
 import type { ViewModel } from "./ViewModel";
 import type { UseCaseOutputPort } from "./UseCase";
+import type { ResponseModel } from "./ResponseModel";
 
 /**
  * A presenter maps data structures returned by the use case interactor into data structures most convenient for the view.
@@ -10,11 +9,13 @@ import type { UseCaseOutputPort } from "./UseCase";
  * @example
  */
 export abstract class Presenter<
-	RM extends Result<unknown>,
+	RM extends ResponseModel<unknown>,
 	VM extends ViewModel,
 > implements UseCaseOutputPort<RM>
 {
-	public constructor(protected onViewModelChange: (vm: VM) => void) {}
+	public constructor(private readonly onViewModelChange: (vm: VM) => void) {}
+
+	public abstract toViewModel(responseModel: RM): VM;
 
 	private setViewModel(responseModel: RM) {
 		this.onViewModelChange(this.toViewModel(responseModel));
@@ -39,6 +40,4 @@ export abstract class Presenter<
 
 		this.setViewModel(responseModel);
 	}
-
-	public abstract toViewModel(responseModel: RM): VM;
 }
