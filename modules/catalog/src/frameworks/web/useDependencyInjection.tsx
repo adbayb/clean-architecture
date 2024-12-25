@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import type { PropsWithChildren } from "react";
 import { Guard } from "@clean-architecture/shared-kernel";
 
-import type { QuoteEntityGateway } from "../../adapters/QuoteEntityGateway";
+import { QuoteEntityGateway } from "../../adapters/QuoteEntityGateway";
 
 type DependencyInjectionContextValue = {
 	readonly quoteEntityGateway: QuoteEntityGateway;
@@ -11,15 +11,16 @@ type DependencyInjectionContextValue = {
 const DependencyInjectionContext =
 	createContext<DependencyInjectionContextValue | null>(null);
 
-type DependencyInjectionProps =
-	PropsWithChildren<DependencyInjectionContextValue>;
+// TODO: add data source as props to enable test vs. real host
+type DependencyInjectionProps = PropsWithChildren;
 
-export const DependencyInjection = ({
-	children,
-	...contextValue
-}: DependencyInjectionProps) => {
+const CONTEXT_VALUE: DependencyInjectionContextValue = {
+	quoteEntityGateway: new QuoteEntityGateway(),
+};
+
+export const DependencyInjection = ({ children }: DependencyInjectionProps) => {
 	return (
-		<DependencyInjectionContext.Provider value={contextValue}>
+		<DependencyInjectionContext.Provider value={CONTEXT_VALUE}>
 			{children}
 		</DependencyInjectionContext.Provider>
 	);

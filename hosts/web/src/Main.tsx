@@ -1,11 +1,9 @@
 // eslint-disable-next-line import-x/no-namespace
 import * as Catalog from "@clean-architecture/catalog";
 
-export const App = () => {
+export const Main = () => {
 	return (
-		<Catalog.DependencyInjection
-			quoteEntityGateway={new Catalog.QuoteEntityGateway()} // TODO: move it internally?
-		>
+		<Catalog.DependencyInjection>
 			<Catalog.GetQuoteView />
 		</Catalog.DependencyInjection>
 	);
