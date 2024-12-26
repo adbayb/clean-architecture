@@ -1,23 +1,21 @@
 import { Presenter } from "@clean-architecture/shared-kernel";
 
-import type { GetQuoteResponseModel } from "../useCases/GetQuoteUseCase";
+import type { GetQuoteOutputData } from "../useCases/GetQuoteUseCase";
 import type { GetQuoteViewModel } from "./GetQuoteViewModel";
 
 export class GetQuotePresenter extends Presenter<
-	GetQuoteResponseModel,
+	GetQuoteOutputData,
 	GetQuoteViewModel
 > {
-	public override toViewModel(
-		responseModel: GetQuoteResponseModel,
-	): GetQuoteViewModel {
-		if (responseModel.type === "failure") {
+	public override toViewModel(input: GetQuoteOutputData): GetQuoteViewModel {
+		if (input.type === "failure") {
 			return {
-				error: responseModel.payload,
+				error: input.payload,
 			};
 		}
 
 		return {
-			data: responseModel.payload.content,
+			data: input.payload.content,
 		};
 	}
 }

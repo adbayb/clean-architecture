@@ -1,28 +1,26 @@
 import { UseCaseInteractor, success } from "@clean-architecture/shared-kernel";
 import type {
-	RequestModel,
-	ResponseModel,
+	UseCaseInputData,
+	UseCaseOutputData,
 } from "@clean-architecture/shared-kernel";
 
 import type { QuoteEntityGatewayPort } from "../entities/QuoteEntityGatewayPort";
 
-export type GetQuoteRequestModel = RequestModel<{
+export type GetQuoteInputData = UseCaseInputData<{
 	id: string;
 }>;
 
-export type GetQuoteResponseModel = ResponseModel<{
+export type GetQuoteOutputData = UseCaseOutputData<{
 	content: string;
 }>;
 
 export class GetQuoteUseCase extends UseCaseInteractor<
-	GetQuoteRequestModel,
-	GetQuoteResponseModel,
+	GetQuoteInputData,
+	GetQuoteOutputData,
 	QuoteEntityGatewayPort
 > {
-	public override async execute(requestModel: GetQuoteRequestModel) {
-		const entityGatewayResult = await this.entityGateway.getOne(
-			requestModel.id,
-		);
+	public override async execute(input: GetQuoteInputData) {
+		const entityGatewayResult = await this.entityGateway.getOne(input.id);
 
 		if (entityGatewayResult.type === "failure") {
 			this.presenter.error(entityGatewayResult);

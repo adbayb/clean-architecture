@@ -1,37 +1,46 @@
 import type { Result } from "@open-vanilla/result";
 
+import type { AnyRecord } from "./types";
 import type { EntityGateway } from "./EntityGateway";
 import type { DataTransferObject } from "./DataTransferObject";
 
+export type UseCaseInputData<Input extends AnyRecord = AnyRecord> =
+	DataTransferObject<Input>;
+
+export type UseCaseOutputData<
+	SuccessInput = unknown,
+	FailureInput extends Error = Error,
+> = Result<SuccessInput, FailureInput>;
+
 export abstract class UseCaseInteractor<
-	RequestModel extends DataTransferObject,
-	ResponseModel extends Result<unknown>,
+	InputData extends UseCaseInputData,
+	OutputData extends UseCaseOutputData,
 	Gateway extends EntityGateway,
-> implements UseCaseInputPort<RequestModel>
+> implements UseCaseInputBoundary<InputData>
 {
 	public constructor(
 		protected readonly entityGateway: Gateway,
-		protected readonly presenter: UseCaseOutputPort<ResponseModel>,
+		protected readonly presenter: UseCaseOutputBoundary<OutputData>,
 	) {}
 
-	public abstract execute(requestModel: RequestModel): Promise<void> | void;
+	public abstract execute(input: InputData): Promise<void> | void;
 }
 
-export type UseCaseInputPort<RequestModel> = {
-	execute: (requestModel: RequestModel) => Promise<void> | void;
+export type UseCaseInputBoundary<InputData extends UseCaseInputData> = {
+	execute: (input: InputData) => Promise<void> | void;
 };
 
-export type UseCaseOutputPort<ResponseModel extends Result<unknown>> = {
+export type UseCaseOutputBoundary<OutputData extends UseCaseOutputData> = {
 	/**
 	 * Error presentation handler.
-	 * @param responseModel - The contextual error response model.
+	 * @param input - The use case output data.
 	 */
-	error: (responseModel: ResponseModel) => void;
+	error: (input: OutputData) => void;
 	/**
 	 * Success presentation handler.
-	 * @param responseModel - The contextual success response model.
+	 * @param input - The use case output data.
 	 */
-	ok: (responseModel: ResponseModel) => void;
+	ok: (input: OutputData) => void;
 	/*
 	 * // Other contract can be added to present common errors (naming is inspired by the related http error)
 	 * notFound(): void;

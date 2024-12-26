@@ -58,6 +58,7 @@ See [documentation](./modules/shared-kernel/).
 ## 📚 Resources
 
 - [Clean Architecture original blog post](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
+- [Clean Architecture talk (video)](https://www.youtube.com/watch?v=Nsjsiz2A9mg).
 - [Clean Architecture book summary](https://github.com/serodriguez68/clean-architecture/).
 - [Domain-Driven Design tactical design and Clean Architecture (video)](https://www.youtube.com/watch?v=hf_XBb5cSoA).
 - [Pull-based vs push-based approach managing use case output](https://softwareengineering.stackexchange.com/a/420360) or [why presenters (push-based) should be preferred to returned use case values (pull-based)](https://lukemorton.tech/articles/nuances-in-clean-architecture). TLDR; Communication from Controller to Presenter is meant to go through the application layer, making the Controller do part of the Presenters job is likely a domain/application leak.

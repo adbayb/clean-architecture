@@ -1,43 +1,42 @@
 import type { ViewModel } from "./ViewModel";
-import type { UseCaseOutputPort } from "./UseCase";
-import type { ResponseModel } from "./ResponseModel";
+import type { UseCaseOutputBoundary, UseCaseOutputData } from "./UseCase";
 
 /**
  * A presenter maps data structures returned by the use case interactor into data structures most convenient for the view.
- * The presenter implements the `UseCaseOutputPort` following the clean architecture [diagram](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
- * @param responseModel
- * @example
+ * The presenter implements the `UseCaseOutputBoundary` following the clean architecture [diagram](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
  */
 export abstract class Presenter<
-	RM extends ResponseModel<unknown>,
-	VM extends ViewModel,
-> implements UseCaseOutputPort<RM>
+	OutputData extends UseCaseOutputData,
+	Model extends ViewModel,
+> implements UseCaseOutputBoundary<OutputData>
 {
-	public constructor(private readonly onViewModelChange: (vm: VM) => void) {}
+	public constructor(
+		private readonly onViewModelChange: (input: Model) => void,
+	) {}
 
-	public abstract toViewModel(responseModel: RM): VM;
+	public abstract toViewModel(input: OutputData): Model;
 
-	private setViewModel(responseModel: RM) {
-		this.onViewModelChange(this.toViewModel(responseModel));
+	private setViewModel(input: OutputData) {
+		this.onViewModelChange(this.toViewModel(input));
 	}
 
-	public error(responseModel: RM) {
-		if (responseModel.type !== "failure") {
+	public error(input: OutputData) {
+		if (input.type !== "failure") {
 			throw new RangeError(
 				"Attempting to convert a success result into an error view model value",
 			);
 		}
 
-		this.setViewModel(responseModel);
+		this.setViewModel(input);
 	}
 
-	public ok(responseModel: RM) {
-		if (responseModel.type !== "success") {
+	public ok(input: OutputData) {
+		if (input.type !== "success") {
 			throw new RangeError(
 				"Attempting to convert a failure result into a success view model value",
 			);
 		}
 
-		this.setViewModel(responseModel);
+		this.setViewModel(input);
 	}
 }

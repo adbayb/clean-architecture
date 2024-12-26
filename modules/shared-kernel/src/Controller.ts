@@ -1,11 +1,14 @@
-import type { UseCaseInputPort } from "./UseCase";
-import type { RequestModel } from "./RequestModel";
+import type { UseCaseInputBoundary, UseCaseInputData } from "./UseCase";
 
-export abstract class Controller<Model extends RequestModel = RequestModel> {
+export abstract class Controller<
+	InputData extends UseCaseInputData = UseCaseInputData,
+> {
 	// Controller must have no reference to presenter to prevent coupling between both different object and allow more easier interchangeability (using another presenter with the same controller context for example)
-	public constructor(private readonly useCase: UseCaseInputPort<Model>) {}
+	public constructor(
+		private readonly useCase: UseCaseInputBoundary<InputData>,
+	) {}
 
-	public async execute(requestModel: Model) {
-		await this.useCase.execute(requestModel);
+	public async execute(input: InputData) {
+		await this.useCase.execute(input);
 	}
 }

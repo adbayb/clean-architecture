@@ -1,5 +1,5 @@
 import { Controller } from "@clean-architecture/shared-kernel";
 
-import type { GetQuoteRequestModel } from "../useCases/GetQuoteUseCase";
+import type { GetQuoteInputData } from "../useCases/GetQuoteUseCase";
 
-export class GetQuoteController extends Controller<GetQuoteRequestModel> {}
+export class GetQuoteController extends Controller<GetQuoteInputData> {}
