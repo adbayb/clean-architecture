@@ -1,7 +1,7 @@
 <br>
 <div align="center">
     <h1>📦 clean-architecture</h1>
-    <strong>A clean architecture implementation example to enable testable and evolutive systems</strong>
+    <strong>A clean architecture example to implement testable and evolutive systems</strong>
 </div>
 <br>
 <br>
