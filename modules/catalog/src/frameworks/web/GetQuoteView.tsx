@@ -5,6 +5,7 @@ import type { GetQuoteViewModel } from "../../adapters/GetQuoteViewModel";
 import { GetQuotePresenter } from "../../adapters/GetQuotePresenter";
 import { GetQuoteController } from "../../adapters/GetQuoteController";
 import { useDependencyInjection } from "./useDependencyInjection";
+import type { Hook } from "./types";
 
 export const GetQuoteView = () => {
 	const { controller, viewModel } = useGetQuote();
@@ -28,7 +29,7 @@ export const GetQuoteView = () => {
 	return null;
 };
 
-const useGetQuote = () => {
+const useGetQuote: Hook<GetQuoteController, GetQuoteViewModel> = () => {
 	const { quoteEntityGateway } = useDependencyInjection();
 	const [viewModel, setViewModel] = useState<GetQuoteViewModel>({});
 	const presenter = useMemo(() => new GetQuotePresenter(setViewModel), []);
