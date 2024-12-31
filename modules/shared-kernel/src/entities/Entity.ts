@@ -1,8 +1,8 @@
 import type { Result } from "@open-vanilla/result";
 
+import { Guard } from "../core/Guard";
 import type { GetValueFromValueObject } from "./ValueObject";
 import type { IdValueObject } from "./IdValueObject";
-import { Guard } from "./Guard";
 import type { DomainObject } from "./DomainObject";
 
 type EntityAttributes = { id: IdValueObject };

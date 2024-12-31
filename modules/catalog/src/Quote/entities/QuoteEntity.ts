@@ -6,8 +6,8 @@ import {
 } from "@clean-architecture/shared-kernel";
 import type { GetValueFromValueObject } from "@clean-architecture/shared-kernel";
 
-import { CreatedAtValueObject } from "./CreatedAtValueObject";
-import { AuthorValueObject } from "./AuthorValueObject";
+import { CreatedAtValueObject } from "../../shared/entities/CreatedAtValueObject";
+import { AuthorValueObject } from "../../shared/entities/AuthorValueObject";
 
 type QuoteEntityAttributes = {
 	id: IdValueObject;

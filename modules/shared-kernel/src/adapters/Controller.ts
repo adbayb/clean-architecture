@@ -1,4 +1,5 @@
-import type { UseCaseInputBoundary, UseCaseInputData } from "./UseCase";
+import type { UseCaseInputData } from "../useCases/UseCaseInputData";
+import type { UseCaseInputBoundary } from "../useCases/UseCaseInputBoundary";
 
 export abstract class Controller<
 	InputData extends UseCaseInputData = UseCaseInputData,

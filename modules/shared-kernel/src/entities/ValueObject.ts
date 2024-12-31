@@ -1,6 +1,6 @@
 import type { Result } from "@open-vanilla/result";
 
-import { Guard } from "./Guard";
+import { Guard } from "../core/Guard";
 import type { DomainObject } from "./DomainObject";
 
 /**

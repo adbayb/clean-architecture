@@ -4,7 +4,7 @@ import type {
 	UseCaseOutputData,
 } from "@clean-architecture/shared-kernel";
 
-import type { QuoteEntityGatewayPort } from "../entities/QuoteEntityGatewayPort";
+import type { QuoteEntityGatewayPort } from "../../Quote";
 
 export type GetQuoteInputData = UseCaseInputData<{
 	id: string;

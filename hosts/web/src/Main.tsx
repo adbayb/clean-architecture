@@ -1,10 +1,11 @@
-// eslint-disable-next-line import-x/no-namespace
+/* eslint-disable import-x/no-namespace */
+import { DependencyInjection } from "@clean-architecture/shared-kernel";
 import * as Catalog from "@clean-architecture/catalog";
 
 export const Main = () => {
 	return (
-		<Catalog.DependencyInjection>
+		<DependencyInjection entityGateway={new Catalog.QuoteEntityGateway()}>
 			<Catalog.GetQuoteView />
-		</Catalog.DependencyInjection>
+		</DependencyInjection>
 	);
 };
