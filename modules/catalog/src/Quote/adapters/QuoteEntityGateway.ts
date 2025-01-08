@@ -1,9 +1,9 @@
 import { success } from "@clean-architecture/shared-kernel";
 
-import type { QuoteEntityGatewayPort } from "../entities/QuoteEntityGatewayPort";
+import type { QuoteEntityGatewayBoundary } from "../entities/QuoteEntityGatewayBoundary";
 import { QuoteEntity } from "../entities/QuoteEntity";
 
-export class QuoteEntityGateway implements QuoteEntityGatewayPort {
+export class QuoteEntityGateway implements QuoteEntityGatewayBoundary {
 	public async getMany() {
 		await Promise.resolve();
 

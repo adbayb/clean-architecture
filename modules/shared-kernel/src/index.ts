@@ -1,6 +1,6 @@
 /** Domain-related shared interfaces. */
 export { Entity } from "./entities/Entity";
-export type { EntityGateway } from "./entities/EntityGateway";
+export type { EntityGatewayBoundary } from "./entities/EntityGatewayBoundary";
 export { IdValueObject } from "./entities/IdValueObject";
 export type { GetValueFromValueObject } from "./entities/ValueObject";
 export { ValueObject } from "./entities/ValueObject";

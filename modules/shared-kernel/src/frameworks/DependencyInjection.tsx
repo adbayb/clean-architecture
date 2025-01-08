@@ -1,24 +1,32 @@
 import { createContext, useContext, useMemo } from "react";
 import type { Context, PropsWithChildren } from "react";
 
-import type { EntityGateway } from "../entities/EntityGateway";
+import type { EntityGatewayBoundary } from "../entities/EntityGatewayBoundary";
 import { Guard } from "../core/Guard";
 
-type DependencyInjectionContextValue<Gateway extends EntityGateway> = {
-	readonly entityGateway: Gateway;
+type DependencyInjectionContextValue<
+	EntityGateway extends EntityGatewayBoundary,
+> = {
+	readonly entityGateway: EntityGateway;
 };
 
 const DependencyInjectionContext =
-	createContext<DependencyInjectionContextValue<EntityGateway> | null>(null);
+	createContext<DependencyInjectionContextValue<EntityGatewayBoundary> | null>(
+		null,
+	);
 
-type DependencyInjectionProps<Gateway extends EntityGateway> =
+type DependencyInjectionProps<Gateway extends EntityGatewayBoundary> =
 	PropsWithChildren<DependencyInjectionContextValue<Gateway>>;
 
-export const DependencyInjection = <Gateway extends EntityGateway>({
+export const DependencyInjection = <
+	EntityGateway extends EntityGatewayBoundary,
+>({
 	children,
 	entityGateway,
-}: DependencyInjectionProps<Gateway>) => {
-	const value = useMemo<DependencyInjectionContextValue<Gateway>>(() => {
+}: DependencyInjectionProps<EntityGateway>) => {
+	const value = useMemo<
+		DependencyInjectionContextValue<EntityGateway>
+	>(() => {
 		return {
 			entityGateway,
 		};
@@ -31,9 +39,11 @@ export const DependencyInjection = <Gateway extends EntityGateway>({
 	);
 };
 
-export const useDependencyInjection = <Gateway extends EntityGateway>() => {
+export const useDependencyInjection = <
+	EntityGateway extends EntityGatewayBoundary,
+>() => {
 	const contextValue = useContext(
-		DependencyInjectionContext as Context<DependencyInjectionContextValue<Gateway> | null>,
+		DependencyInjectionContext as Context<DependencyInjectionContextValue<EntityGateway> | null>,
 	);
 
 	const guardOutput = Guard.mustBeDefinedAndNonNull(contextValue);

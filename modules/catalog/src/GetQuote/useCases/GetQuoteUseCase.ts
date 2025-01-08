@@ -4,7 +4,7 @@ import type {
 	UseCaseOutputData,
 } from "@clean-architecture/shared-kernel";
 
-import type { QuoteEntityGatewayPort } from "../../Quote";
+import type { QuoteEntityGatewayBoundary } from "../../Quote";
 
 export type GetQuoteInputData = UseCaseInputData<{
 	id: string;
@@ -17,7 +17,7 @@ export type GetQuoteOutputData = UseCaseOutputData<{
 export class GetQuoteUseCase extends UseCaseInteractor<
 	GetQuoteInputData,
 	GetQuoteOutputData,
-	QuoteEntityGatewayPort
+	QuoteEntityGatewayBoundary
 > {
 	public override async execute(input: GetQuoteInputData) {
 		const entityGatewayResult = await this.entityGateway.getOne(input.id);
