@@ -14,7 +14,7 @@
 		"source.addMissingImports.ts": "explicit",
 		"source.organizeImports": "never",
 		"source.organizeLinkDefinitions": "explicit",
-		"source.removeUnused.ts": "explicit",
+		"source.removeUnused.ts": "never",
 		"source.removeUnusedImports": "explicit",
 		"source.sortImports": "never"
 	},

@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { useDependencyInjection } from "@clean-architecture/shared-kernel";
 import type { Hook } from "@clean-architecture/shared-kernel";
 
 import { GetQuoteUseCase } from "../useCases/GetQuoteUseCase";
 import type { GetQuoteViewModel } from "../adapters/GetQuoteViewModel";
 import { GetQuotePresenter } from "../adapters/GetQuotePresenter";
 import { GetQuoteController } from "../adapters/GetQuoteController";
-import type { QuoteEntityGateway } from "../../Quote";
+import { useDependencyInjection } from "../../shared/frameworks/DependencyInjection";
 
 export const GetQuoteView = () => {
 	const { controller, viewModel } = useGetQuote();
@@ -31,7 +30,7 @@ export const GetQuoteView = () => {
 };
 
 const useGetQuote: Hook<GetQuoteController, GetQuoteViewModel> = () => {
-	const { entityGateway } = useDependencyInjection<QuoteEntityGateway>();
+	const { entityGateway } = useDependencyInjection();
 	const [viewModel, setViewModel] = useState<GetQuoteViewModel>({});
 	const presenter = useMemo(() => new GetQuotePresenter(setViewModel), []);
 

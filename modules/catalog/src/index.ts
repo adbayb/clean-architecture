@@ -1,2 +1,2 @@
 export { GetQuoteView } from "./GetQuote";
-export { QuoteEntityGateway } from "./Quote";
+export { DependencyInjection } from "./shared/frameworks/DependencyInjection";
