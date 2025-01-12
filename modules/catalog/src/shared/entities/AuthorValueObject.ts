@@ -1,15 +1,13 @@
 import { Guard, ValueObject, success } from "@clean-architecture/shared-kernel";
 
 type Value = {
-	firstName: string;
-	lastName: string;
+	fullName: string;
 };
 
 export class AuthorValueObject extends ValueObject<Value> {
 	public static override create(input: Value) {
 		const failedGuard = Guard.against(
-			Guard.mustBeNonEmptyString(input.firstName),
-			Guard.mustBeNonEmptyString(input.lastName),
+			Guard.mustBeNonEmptyString(input.fullName),
 		);
 
 		if (failedGuard) return failedGuard;

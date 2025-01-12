@@ -11,16 +11,12 @@ export class QuoteEntityGateway implements QuoteEntityGatewayBoundary {
 	}
 
 	public async getOne(id: string) {
-		await Promise.resolve();
-
-		const fullName = "Test Test";
-		const [firstName, lastName] = fullName.split(" ") as [string, string];
-
-		return QuoteEntity.create({
+		const dataSourceOutput = await Promise.resolve({
 			id,
 			content: "Fake content",
-			firstName,
-			lastName,
+			fullName: "Test Test",
 		});
+
+		return QuoteEntity.create(dataSourceOutput);
 	}
 }

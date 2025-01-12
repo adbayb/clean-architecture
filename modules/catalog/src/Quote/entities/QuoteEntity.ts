@@ -16,11 +16,6 @@ type QuoteEntityAttributes = {
 	createdAt: CreatedAtValueObject;
 };
 
-type QuoteEntityCreateInput = GetValueFromValueObject<AuthorValueObject> &
-	Pick<QuoteEntityAttributes, "content"> & {
-		id: string;
-	};
-
 export class QuoteEntity extends Entity<QuoteEntityAttributes> {
 	private constructor(public override attributes: QuoteEntityAttributes) {
 		super(attributes);
@@ -29,14 +24,16 @@ export class QuoteEntity extends Entity<QuoteEntityAttributes> {
 	public static override create({
 		id,
 		content,
-		firstName,
-		lastName,
-	}: QuoteEntityCreateInput) {
+		fullName,
+	}: GetValueFromValueObject<AuthorValueObject> &
+		Pick<QuoteEntityAttributes, "content"> & {
+			id: string;
+		}) {
 		const guardContentResult = Guard.mustBeLessThanCharacters(content, 280);
 
 		if (guardContentResult.type === "failure") return guardContentResult;
 
-		const author = AuthorValueObject.create({ firstName, lastName });
+		const author = AuthorValueObject.create({ fullName });
 
 		if (author.type === "failure") return author;
 
