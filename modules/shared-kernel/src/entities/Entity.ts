@@ -1,7 +1,7 @@
 import type { Result } from "@open-vanilla/result";
 
 import { Guard } from "../core/Guard";
-import type { GetValueFromValueObject } from "./ValueObject";
+import type { AnyInput } from "../core/AnyInput";
 import type { IdValueObject } from "./IdValueObject";
 import type { DomainObject } from "./DomainObject";
 
@@ -13,9 +13,7 @@ export abstract class Entity<
 {
 	protected constructor(public attributes: Attributes) {}
 
-	public static create(_input: {
-		id: GetValueFromValueObject<EntityAttributes["id"]>;
-	}): Entity | Result<Entity> {
+	public static create(_input: AnyInput): Entity | Result<Entity> {
 		throw new Error("NotImplementedException");
 	}
 

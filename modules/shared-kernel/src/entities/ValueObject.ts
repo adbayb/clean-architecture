@@ -1,6 +1,7 @@
 import type { Result } from "@open-vanilla/result";
 
 import { Guard } from "../core/Guard";
+import type { AnyInput } from "../core/AnyInput";
 import type { DomainObject } from "./DomainObject";
 
 /**
@@ -24,7 +25,7 @@ export abstract class ValueObject<Value> implements DomainObject {
 	public readonly value: Value;
 
 	public static create(
-		_input: GetValueFromValueObject<ValueObject<unknown>>,
+		_input: AnyInput,
 	): Result<ValueObject<unknown>> | ValueObject<unknown> {
 		throw new Error("NotImplementedException");
 	}
