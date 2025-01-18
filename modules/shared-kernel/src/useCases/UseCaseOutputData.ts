@@ -1,4 +1,4 @@
-import type { Result } from "@open-vanilla/result";
+import type { Result } from "../Result";
 
 export type UseCaseOutputData<
 	SuccessInput = unknown,

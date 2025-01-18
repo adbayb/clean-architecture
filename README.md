@@ -1,6 +1,6 @@
 <br>
 <div align="center">
-    <h1>📦 clean-architecture</h1>
+    <h1>🏗️ Clean Architecture</h1>
     <strong>A clean architecture example to implement testable and evolutive systems</strong>
 </div>
 <br>

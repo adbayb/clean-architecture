@@ -1,17 +1,32 @@
-import { Guard, ValueObject, success } from "@clean-architecture/shared-kernel";
+import {
+	Guard,
+	createValueObjectFactory,
+	success,
+} from "@clean-architecture/shared-kernel";
+import type { Result, ValueObject } from "@clean-architecture/shared-kernel";
 
 type Value = {
 	fullName: string;
 };
 
-export class AuthorValueObject extends ValueObject<Value> {
-	public static override create(input: Value) {
-		const failedGuard = Guard.against(
-			Guard.mustBeNonEmptyString(input.fullName),
-		);
+export type AuthorValueObject = ValueObject<Value>;
 
-		if (failedGuard) return failedGuard;
+export const createAuthorValueObject = createValueObjectFactory<
+	Result<AuthorValueObject>,
+	Value
+>((helpers, input) => {
+	const failedGuard = Guard.against(
+		Guard.mustBeNonEmptyString(input.fullName),
+	);
 
-		return success(new AuthorValueObject(input));
-	}
-}
+	if (failedGuard) return failedGuard;
+
+	const valueObject: AuthorValueObject = {
+		isEqualTo(value) {
+			return helpers.isEqualTo(valueObject, value);
+		},
+		value: input,
+	};
+
+	return success(valueObject);
+});

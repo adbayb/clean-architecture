@@ -1,6 +1,8 @@
-import { UseCaseInteractor, success } from "@clean-architecture/shared-kernel";
+import { success } from "@clean-architecture/shared-kernel";
 import type {
 	UseCaseInputData,
+	UseCaseInteractor,
+	UseCaseInteractorFactory,
 	UseCaseOutputData,
 } from "@clean-architecture/shared-kernel";
 
@@ -14,22 +16,27 @@ export type GetQuoteOutputData = UseCaseOutputData<{
 	content: string;
 }>;
 
-export class GetQuoteUseCase extends UseCaseInteractor<
+export type GetQuoteInteractor = UseCaseInteractor<GetQuoteInputData>;
+
+export const createGetQuoteInteractor: UseCaseInteractorFactory<
+	GetQuoteInteractor,
 	GetQuoteInputData,
 	GetQuoteOutputData,
 	QuoteEntityGatewayBoundary
-> {
-	public override async execute(input: GetQuoteInputData) {
-		const entityGatewayResult = await this.entityGateway.getOne(input.id);
+> = (entityGateway, presenter) => {
+	return {
+		async execute(input) {
+			const entityGatewayResult = await entityGateway.getOne(input.id);
 
-		if (entityGatewayResult.type === "failure") {
-			this.presenter.error(entityGatewayResult);
-		} else {
-			this.presenter.ok(
-				success({
-					content: entityGatewayResult.payload.attributes.content,
-				}),
-			);
-		}
-	}
-}
+			if (entityGatewayResult.type === "failure") {
+				presenter.error(entityGatewayResult);
+			} else {
+				presenter.ok(
+					success({
+						content: entityGatewayResult.payload.content,
+					}),
+				);
+			}
+		},
+	};
+};

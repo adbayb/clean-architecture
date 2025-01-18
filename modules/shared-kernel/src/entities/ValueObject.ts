@@ -1,8 +1,6 @@
-import type { Result } from "@open-vanilla/result";
-
-import { Guard } from "../core/Guard";
-import type { AnyInput } from "../core/AnyInput";
-import type { DomainObject } from "./DomainObject";
+import type { Result } from "../Result";
+import { Guard } from "../Guard";
+import type { AnyRecord } from "../AnyRecord";
 
 /**
  * [Value Objects](https://en.wikipedia.org/wiki/Value_object) are immutable entities whose value is completely determined by their attributes.
@@ -21,28 +19,45 @@ import type { DomainObject } from "./DomainObject";
  * A Value Object must check for the consistency of its values.
  * Every formal validations must happen at value object construction time.
  */
-export abstract class ValueObject<Value> implements DomainObject {
-	public readonly value: Value;
+export type ValueObject<Value = unknown> = {
+	isEqualTo: (input: unknown) => input is ValueObject<Value>;
+	value: Value;
+};
 
-	public static create(
-		_input: AnyInput,
-	): Result<ValueObject<unknown>> | ValueObject<unknown> {
-		throw new Error("NotImplementedException");
-	}
+export const createValueObjectFactory = <
+	Output extends Result<ValueObject> | ValueObject,
+	Input = unknown,
+>(
+	factory: (helpers: FactoryHelpers, input: Input) => Output,
+) => {
+	const helpers: FactoryHelpers = {
+		isEqualTo(valueObject, value): value is typeof valueObject {
+			if (valueObject === value) return true;
 
-	protected constructor(input: Value) {
-		this.value = Object.freeze(input); // Immutability is enforced via read-only type and mutation lock (Object.freeze).
-	}
+			if (Guard.mustBeDefinedAndNonNull(value).type === "failure")
+				return false;
 
-	public equals(input: unknown) {
-		if (this === input) return true;
+			return JSON.stringify(valueObject) === JSON.stringify(value);
+		},
+		isInstanceOf(value): value is ValueObject {
+			if (Guard.mustBeRecord(value).type === "failure") return false;
 
-		if (Guard.mustBeDefinedAndNonNull(input).type === "failure")
-			return false;
+			const castValue = value as AnyRecord;
 
-		return JSON.stringify(this) === JSON.stringify(input);
-	}
-}
+			return "value" in castValue && "isEqualTo" in castValue; // Duck typing check
+		},
+	};
 
-export type GetValueFromValueObject<Input extends ValueObject<unknown>> =
-	Input["value"];
+	return (input: Input) => {
+		// Immutability is enforced by design via read-only type and mutation lock (Object.freeze).
+		return Object.freeze(factory(helpers, input));
+	};
+};
+
+type FactoryHelpers = {
+	isEqualTo: <Value>(
+		valueObject: ValueObject<Value>,
+		value: unknown,
+	) => value is typeof valueObject;
+	isInstanceOf: (input: unknown) => input is ValueObject;
+};

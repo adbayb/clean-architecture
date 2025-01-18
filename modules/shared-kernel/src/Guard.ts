@@ -1,5 +1,5 @@
-import { failure, success } from "@open-vanilla/result";
-import type { Result } from "@open-vanilla/result";
+import { failure, success } from "./Result";
+import type { Result } from "./Result";
 
 /**
  * A record exposing guard clauses.
@@ -38,6 +38,19 @@ export const Guard = {
 	mustBeNonEmptyString(input: string) {
 		if (input.length === 0) {
 			return failure(new TypeError(`\`${input}\` must be non empty`));
+		}
+
+		return success(input);
+	},
+	mustBeRecord<Input>(input: Input) {
+		if (
+			input === null ||
+			typeof input !== "object" ||
+			Array.isArray(input)
+		) {
+			return failure(
+				new TypeError(`\`${String(input)}\` must be a record type`),
+			);
 		}
 
 		return success(input);

@@ -4,16 +4,15 @@ import type { UseCaseOutputBoundary } from "./UseCaseOutputBoundary";
 import type { UseCaseInputData } from "./UseCaseInputData";
 import type { UseCaseInputBoundary } from "./UseCaseInputBoundary";
 
-export abstract class UseCaseInteractor<
+export type UseCaseInteractor<InputData extends UseCaseInputData> =
+	UseCaseInputBoundary<InputData>;
+
+export type UseCaseInteractorFactory<
+	Output extends UseCaseInteractor<InputData>,
 	InputData extends UseCaseInputData,
 	OutputData extends UseCaseOutputData,
 	EntityGateway extends EntityGatewayBoundary,
-> implements UseCaseInputBoundary<InputData>
-{
-	public constructor(
-		protected readonly entityGateway: EntityGateway,
-		protected readonly presenter: UseCaseOutputBoundary<OutputData>,
-	) {}
-
-	public abstract execute(input: InputData): Promise<void> | void;
-}
+> = (
+	entityGateway: EntityGateway,
+	presenter: UseCaseOutputBoundary<OutputData>,
+) => Output;

@@ -1,8 +1,11 @@
-import type { Result } from "@open-vanilla/result";
-
-import type { AnyInput } from "../core/AnyInput";
+import type { Result } from "../Result";
+import type { AnyInput } from "../AnyInput";
 import type { Entity } from "./Entity";
 
-export type EntityGatewayBoundary<E extends Entity = Entity> = {
-	toEntity: (input: AnyInput) => Result<E>;
-};
+export type EntityGatewayBoundary<
+	Input extends {
+		toEntity: (input: AnyInput) => Result<Entity>;
+	} = {
+		toEntity: (input: AnyInput) => Result<Entity>;
+	},
+> = Input;

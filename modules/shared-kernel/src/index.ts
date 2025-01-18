@@ -1,18 +1,23 @@
 /** Domain-related shared interfaces. */
-export { Entity } from "./entities/Entity";
+export type { Entity } from "./entities/Entity";
+export { createEntityFactory } from "./entities/Entity";
 export type { EntityGatewayBoundary } from "./entities/EntityGatewayBoundary";
-export { IdValueObject } from "./entities/IdValueObject";
-export type { GetValueFromValueObject } from "./entities/ValueObject";
-export { ValueObject } from "./entities/ValueObject";
+export type { ValueObject } from "./entities/ValueObject";
+export { createValueObjectFactory } from "./entities/ValueObject";
+export type { IdValueObject } from "./entities/IdValueObject";
+export { createIdValueObject } from "./entities/IdValueObject";
 
 /** Application-related shared interfaces. */
 export type { UseCaseInputData } from "./useCases/UseCaseInputData";
 export type { UseCaseOutputData } from "./useCases/UseCaseOutputData";
-export { UseCaseInteractor } from "./useCases/UseCaseInteractor";
+export type {
+	UseCaseInteractor,
+	UseCaseInteractorFactory,
+} from "./useCases/UseCaseInteractor";
 
 /** Infrastructure-related shared interfaces. */
-export { Controller } from "./adapters/Controller";
-export { Presenter } from "./adapters/Presenter";
+export type { Controller, ControllerFactory } from "./adapters/Controller";
+export type { Presenter, PresenterFactory } from "./adapters/Presenter";
 export type { ViewModel } from "./adapters/ViewModel";
 
 /** Framework/Driver-related shared interfaces. */
@@ -22,7 +27,7 @@ export {
 } from "./frameworks/DependencyInjection";
 export type { Hook } from "./frameworks/Hook";
 
-/** Core shared interfaces (uncategorized). */
-export { Guard } from "./core/Guard";
-export { failure, success } from "./core/Result";
-export type { Result } from "./core/Result";
+/** Uncategorized shared interfaces. */
+export { Guard } from "./Guard";
+export { failure, success } from "./Result";
+export type { Result } from "./Result";

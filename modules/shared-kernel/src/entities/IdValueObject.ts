@@ -1,4 +1,5 @@
-import { ValueObject } from "./ValueObject";
+import { createValueObjectFactory } from "./ValueObject";
+import type { ValueObject } from "./ValueObject";
 
 type Value = string;
 
@@ -9,8 +10,18 @@ type Value = string;
  * Indeed, for example, if a function takes both a ID and an Address, it is possible to pass them in the wrong order
  * if they are both strings but impossible if they are represented through a dedicated type)).
  */
-export class IdValueObject extends ValueObject<Value> {
-	public static override create(input: Value = crypto.randomUUID()) {
-		return new IdValueObject(input);
-	}
-}
+export type IdValueObject = ValueObject<Value>;
+
+export const createIdValueObject = createValueObjectFactory<
+	IdValueObject,
+	Value | undefined
+>((helpers, input) => {
+	const valueObject: IdValueObject = {
+		isEqualTo(value) {
+			return helpers.isEqualTo(valueObject, value);
+		},
+		value: input ?? crypto.randomUUID(),
+	};
+
+	return valueObject;
+});

@@ -5,16 +5,17 @@ import {
 } from "@clean-architecture/shared-kernel";
 
 import { QuoteEntityGateway } from "../../Quote";
+import type { QuoteEntityGatewayBoundary } from "../../Quote";
 
 type DependencyInjectionProps = PropsWithChildren;
 
 export const DependencyInjection = ({ children }: DependencyInjectionProps) => {
 	return (
-		<SharedDependencyInjection entityGateway={new QuoteEntityGateway()}>
+		<SharedDependencyInjection entityGateway={QuoteEntityGateway}>
 			{children}
 		</SharedDependencyInjection>
 	);
 };
 
 export const useDependencyInjection =
-	useSharedDependencyInjection<QuoteEntityGateway>;
+	useSharedDependencyInjection<QuoteEntityGatewayBoundary>;

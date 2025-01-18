@@ -1,4 +1,4 @@
-import type { DataTransferObject } from "../core/DataTransferObject";
+import type { DataTransferObject } from "../DataTransferObject";
 
 export type UseCaseInputData<
 	Input extends DataTransferObject = DataTransferObject,

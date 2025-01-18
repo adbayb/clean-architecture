@@ -1,35 +1,42 @@
-import type { Result } from "@open-vanilla/result";
-
-import { Guard } from "../core/Guard";
-import type { AnyInput } from "../core/AnyInput";
+import type { Result } from "../Result";
+import { Guard } from "../Guard";
+import type { AnyRecord } from "../AnyRecord";
 import type { IdValueObject } from "./IdValueObject";
-import type { DomainObject } from "./DomainObject";
 
-type EntityAttributes = { id: IdValueObject };
+export type Entity<Input = AnyRecord> = Input & {
+	id: IdValueObject;
+	isEqualTo: (input: unknown) => input is Entity<Input>;
+};
 
-export abstract class Entity<
-	Attributes extends EntityAttributes = EntityAttributes,
-> implements DomainObject
-{
-	protected constructor(public attributes: Attributes) {}
+export const createEntityFactory = <Output extends Entity, Input = unknown>(
+	factory: (helpers: FactoryHelpers, input: Input) => Result<Output>,
+) => {
+	const helpers: FactoryHelpers = {
+		isEqualTo(entity, value): value is typeof entity {
+			if (entity === value) return true;
 
-	public static create(_input: AnyInput): Entity | Result<Entity> {
-		throw new Error("NotImplementedException");
-	}
+			if (!helpers.isInstanceOf(value)) return false;
 
-	public static isInstanceOf(input: unknown): input is Entity {
-		return input instanceof Entity;
-	}
+			return entity.id === value.id;
+		},
+		isInstanceOf(input): input is Entity {
+			if (Guard.mustBeRecord(input).type === "failure") return false;
 
-	public equals(input: unknown) {
-		if (this === input) return true;
+			const value = input as AnyRecord;
 
-		if (
-			!Entity.isInstanceOf(input) ||
-			Guard.mustBeDefinedAndNonNull(input).type === "failure"
-		)
-			return false;
+			return "id" in value && "isEqualTo" in value; // Duck typing check
+		},
+	};
 
-		return this.attributes.id.equals(input.attributes.id);
-	}
-}
+	return (input: Input) => {
+		return factory(helpers, input);
+	};
+};
+
+type FactoryHelpers = {
+	isEqualTo: <Input>(
+		entity: Entity<Input>,
+		value: unknown,
+	) => value is typeof entity;
+	isInstanceOf: (input: unknown) => input is Entity;
+};

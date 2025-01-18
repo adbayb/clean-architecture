@@ -1,21 +1,40 @@
-import { Presenter } from "@clean-architecture/shared-kernel";
+import type {
+	Presenter,
+	PresenterFactory,
+} from "@clean-architecture/shared-kernel";
 
 import type { GetQuoteOutputData } from "../useCases/GetQuoteUseCase";
 import type { GetQuoteViewModel } from "./GetQuoteViewModel";
 
-export class GetQuotePresenter extends Presenter<
+export type GetQuotePresenter = Presenter<GetQuoteOutputData>;
+
+export const createGetQuotePresenter: PresenterFactory<
+	GetQuotePresenter,
 	GetQuoteOutputData,
 	GetQuoteViewModel
-> {
-	public override toViewModel(input: GetQuoteOutputData): GetQuoteViewModel {
-		if (input.type === "failure") {
-			return {
-				error: input.payload,
-			};
-		}
+> = (onViewModelChange) => {
+	return {
+		error(input) {
+			if (input.type !== "failure") {
+				throw new RangeError(
+					"Attempting to convert a success result into an error view model value",
+				);
+			}
 
-		return {
-			data: input.payload.content,
-		};
-	}
-}
+			onViewModelChange({
+				error: input.payload,
+			});
+		},
+		ok(input) {
+			if (input.type !== "success") {
+				throw new RangeError(
+					"Attempting to convert a failure result into a success view model value",
+				);
+			}
+
+			onViewModelChange({
+				data: input.payload.content,
+			});
+		},
+	};
+};
