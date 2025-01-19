@@ -15,25 +15,13 @@ export const createGetQuotePresenter: PresenterFactory<
 > = (onViewModelChange) => {
 	return {
 		error(input) {
-			if (input.type !== "failure") {
-				throw new RangeError(
-					"Attempting to convert a success result into an error view model value",
-				);
-			}
-
 			onViewModelChange({
-				error: input.payload,
+				error: input,
 			});
 		},
 		ok(input) {
-			if (input.type !== "success") {
-				throw new RangeError(
-					"Attempting to convert a failure result into a success view model value",
-				);
-			}
-
 			onViewModelChange({
-				data: input.payload.content,
+				data: input.content,
 			});
 		},
 	};

@@ -1,4 +1,3 @@
-import { success } from "@clean-architecture/shared-kernel";
 import type {
 	UseCaseInputData,
 	UseCaseInteractor,
@@ -29,13 +28,9 @@ export const createGetQuoteInteractor: UseCaseInteractorFactory<
 			const entityGatewayResult = await entityGateway.getOne(input.id);
 
 			if (entityGatewayResult.type === "failure") {
-				presenter.error(entityGatewayResult);
+				presenter.error(entityGatewayResult.payload);
 			} else {
-				presenter.ok(
-					success({
-						content: entityGatewayResult.payload.content,
-					}),
-				);
+				presenter.ok({ content: entityGatewayResult.payload.content });
 			}
 		},
 	};
