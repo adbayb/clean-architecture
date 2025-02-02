@@ -1,6 +1,6 @@
 import type { ViewModel } from "@clean-architecture/shared-kernel";
 
-export type GetQuoteViewModel = ViewModel<{
+export type GetProductViewModel = ViewModel<{
 	data?: string;
 	error?: Error;
 }>;

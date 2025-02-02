@@ -29,21 +29,28 @@ type NetworkDataSource<Boundary extends DataSourceBoundary> = Boundary & {
 export const createNetworkDataSourceFactory = <
 	Boundary extends DataSourceBoundary,
 >(
-	baseUrl: string,
+	baseUrl: `https://${string}/`,
 	factory: (client: NetworkClient) => Boundary,
 ) => {
+	const createEndpoint = (endpoint: `/${string}`) => {
+		return [
+			baseUrl.replaceAll(/\/$/g, ""),
+			endpoint.replaceAll(/^\//g, ""),
+		].join("/");
+	};
+
 	const client: NetworkClient = {
 		async delete(endpoint, payload) {
-			return request("DELETE", new URL(endpoint, baseUrl), payload);
+			return request("DELETE", createEndpoint(endpoint), payload);
 		},
 		async get(endpoint, payload) {
-			return request("GET", new URL(endpoint, baseUrl), payload);
+			return request("GET", createEndpoint(endpoint), payload);
 		},
 		async post(endpoint, payload) {
-			return request("POST", new URL(endpoint, baseUrl), payload);
+			return request("POST", createEndpoint(endpoint), payload);
 		},
 		async put(endpoint, payload) {
-			return request("PUT", new URL(endpoint, baseUrl), payload);
+			return request("PUT", createEndpoint(endpoint), payload);
 		},
 	};
 
@@ -57,17 +64,15 @@ export const createNetworkDataSourceFactory = <
 
 const request = async <Output>(
 	method: "DELETE" | "GET" | "POST" | "PUT",
-	url: URL,
+	url: string,
 	options: {
 		body?: Record<string, unknown>;
 		token?: string;
 	} = {},
 ) => {
-	const createClientError = (message: string) => {
+	const createError = (message: string) => {
 		return new Error(
-			[`An error occured while fetching \`${url.href}\``, message].join(
-				"\n",
-			),
+			[`An error occured while fetching \`${url}\`.`, message].join("\n"),
 		);
 	};
 
@@ -85,8 +90,8 @@ const request = async <Output>(
 
 		if (!response.ok) {
 			return failure(
-				createClientError(
-					`Received a non-successful code \`${response.status}\` from the server with the following message \`${response.statusText}\``,
+				createError(
+					`Received a non-successful code \`${response.status}\` from the server with the following message \`${response.statusText}\`.`,
 				),
 			);
 		}
@@ -96,8 +101,8 @@ const request = async <Output>(
 		return success(output);
 	} catch (error) {
 		return failure(
-			createClientError(
-				`Unable to fetch due to a rejected promise. More details: \`${String(error)}\``,
+			createError(
+				`Unable to fetch due to a rejected promise. More details: \`${String(error)}\`.`,
 			),
 		);
 	}

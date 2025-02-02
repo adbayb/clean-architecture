@@ -3,11 +3,11 @@ import {
 	success,
 } from "@clean-architecture/shared-kernel";
 
-import type { QuoteDataSourceBoundary } from "../adapters/QuoteEntityGateway";
+import type { ProductDataSourceBoundary } from "../adapters/ProductEntityGateway";
 
-export const createQuoteDummyJsonDataSource =
-	createNetworkDataSourceFactory<QuoteDataSourceBoundary>(
-		"https://dummyjson.com/products",
+export const createProductDummyJsonDataSource =
+	createNetworkDataSourceFactory<ProductDataSourceBoundary>(
+		"https://dummyjson.com/products/",
 		(client) => {
 			return {
 				async create(payload) {

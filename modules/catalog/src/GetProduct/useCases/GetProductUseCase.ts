@@ -5,23 +5,23 @@ import type {
 	UseCaseOutputData,
 } from "@clean-architecture/shared-kernel";
 
-import type { QuoteEntityGatewayBoundary } from "../../Quote";
+import type { ProductEntityGatewayBoundary } from "../../Product";
 
-export type GetQuoteInputData = UseCaseInputData<{
+export type GetProductInputData = UseCaseInputData<{
 	id: string;
 }>;
 
-export type GetQuoteOutputData = UseCaseOutputData<{
+export type GetProductOutputData = UseCaseOutputData<{
 	content: string;
 }>;
 
-export type GetQuoteInteractor = UseCaseInteractor<GetQuoteInputData>;
+export type GetProductInteractor = UseCaseInteractor<GetProductInputData>;
 
-export const createGetQuoteInteractor: UseCaseInteractorFactory<
-	GetQuoteInteractor,
-	GetQuoteInputData,
-	GetQuoteOutputData,
-	QuoteEntityGatewayBoundary
+export const createGetProductInteractor: UseCaseInteractorFactory<
+	GetProductInteractor,
+	GetProductInputData,
+	GetProductOutputData,
+	ProductEntityGatewayBoundary
 > = (entityGateway, presenter) => {
 	return {
 		async execute(input) {

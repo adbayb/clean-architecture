@@ -4,17 +4,17 @@ import {
 	useDependencyInjection as useSharedDependencyInjection,
 } from "@clean-architecture/shared-kernel";
 
-import { createQuoteDummyJsonDataSource } from "../../Quote/frameworks/QuoteDummyJsonDataSource";
-import { createQuoteEntityGateway } from "../../Quote";
-import type { QuoteEntityGatewayBoundary } from "../../Quote";
+import { createProductDummyJsonDataSource } from "../../Product/frameworks/ProductDummyJsonDataSource";
+import { createProductEntityGateway } from "../../Product";
+import type { ProductEntityGatewayBoundary } from "../../Product";
 
 type DependencyInjectionProps = PropsWithChildren;
 
 export const DependencyInjection = ({ children }: DependencyInjectionProps) => {
 	return (
 		<SharedDependencyInjection
-			entityGateway={createQuoteEntityGateway(
-				createQuoteDummyJsonDataSource(),
+			entityGateway={createProductEntityGateway(
+				createProductDummyJsonDataSource(),
 			)}
 		>
 			{children}
@@ -23,4 +23,4 @@ export const DependencyInjection = ({ children }: DependencyInjectionProps) => {
 };
 
 export const useDependencyInjection =
-	useSharedDependencyInjection<QuoteEntityGatewayBoundary>;
+	useSharedDependencyInjection<ProductEntityGatewayBoundary>;
