@@ -93,6 +93,8 @@ This approach to organizing source code will also work, but be aware of the pote
 It’s what I call the "Périphérique antipattern of ports and adapters". The city of Paris, France, has a ring road called the Boulevard Périphérique, which allows you to circumnavigate Paris without entering the complexities of the city.  
 Having all of your infrastructure code in a single source code tree means that it’s potentially possible for infrastructure code in one area of your application (e.g., a web controller) to directly call code in another area of your application (e.g., a database repository), without navigating through the domain. This is especially true if you’ve forgotten to apply appropriate access modifiers to that code.
 
+<br>
+
 ## 📚 Resources
 
 - [Clean Architecture original blog post](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).

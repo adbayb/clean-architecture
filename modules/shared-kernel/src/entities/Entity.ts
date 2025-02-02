@@ -8,6 +8,8 @@ export type Entity<Input = AnyRecord> = Input & {
 	isEqualTo: (input: unknown) => input is Entity<Input>;
 };
 
+export type EntityGatewayBoundary<Input = unknown> = Input;
+
 export const createEntityFactory = <Output extends Entity, Input = unknown>(
 	factory: (helpers: FactoryHelpers, input: Input) => Result<Output>,
 ) => {

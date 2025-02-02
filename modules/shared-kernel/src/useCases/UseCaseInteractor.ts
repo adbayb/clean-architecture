@@ -1,4 +1,4 @@
-import type { EntityGatewayBoundary } from "../entities/EntityGatewayBoundary";
+import type { EntityGatewayBoundary } from "../entities/Entity";
 import type { UseCaseOutputData } from "./UseCaseOutputData";
 import type { UseCaseOutputBoundary } from "./UseCaseOutputBoundary";
 import type { UseCaseInputData } from "./UseCaseInputData";

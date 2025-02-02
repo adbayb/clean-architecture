@@ -4,7 +4,11 @@ import {
 	createIdValueObject,
 	success,
 } from "@clean-architecture/shared-kernel";
-import type { Entity } from "@clean-architecture/shared-kernel";
+import type {
+	Entity,
+	EntityGatewayBoundary,
+	Result,
+} from "@clean-architecture/shared-kernel";
 
 import { createCreatedAtValueObject } from "../../shared/entities/CreatedAtValueObject";
 import type { CreatedAtValueObject } from "../../shared/entities/CreatedAtValueObject";
@@ -15,6 +19,11 @@ export type QuoteEntity = Entity<{
 	author: AuthorValueObject;
 	content: string;
 	createdAt: CreatedAtValueObject;
+}>;
+
+export type QuoteEntityGatewayBoundary = EntityGatewayBoundary<{
+	getMany: () => Promise<Result<QuoteEntity>[]>;
+	getOne: (id: string) => Promise<Result<QuoteEntity>>;
 }>;
 
 export type QuoteEntityFactoryInput = Pick<QuoteEntity, "content"> & {
