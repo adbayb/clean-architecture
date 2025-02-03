@@ -3,34 +3,38 @@ import type { Result } from "@open-vanilla/result";
 
 import type { DataSourceBoundary } from "../adapters/EntityGateway";
 
-type NetworkClient = {
-	delete: <Output>(
+type NetworkClient<NetworkDto> = {
+	delete: (
+		endpoint: `/${string}`,
+		payload?: { token?: string },
+	) => Promise<Result<NetworkDto>>;
+	get: <Output = NetworkDto>(
 		endpoint: `/${string}`,
 		payload?: { token?: string },
 	) => Promise<Result<Output>>;
-	get: <Output>(
-		endpoint: `/${string}`,
-		payload?: { token?: string },
-	) => Promise<Result<Output>>;
-	post: <Output>(
+	post: (
 		endpoint: `/${string}`,
 		payload: { body: Record<string, unknown>; token?: string },
-	) => Promise<Result<Output>>;
-	put: <Output>(
+	) => Promise<Result<NetworkDto>>;
+	put: (
 		endpoint: `/${string}`,
 		payload: { body: Record<string, unknown>; token?: string },
-	) => Promise<Result<Output>>;
+	) => Promise<Result<NetworkDto>>;
 };
 
-type NetworkDataSource<Boundary extends DataSourceBoundary> = Boundary & {
-	client: NetworkClient;
+type NetworkDataSource<
+	Boundary extends DataSourceBoundary,
+	NetworkDto,
+> = Boundary & {
+	client: NetworkClient<NetworkDto>;
 };
 
 export const createNetworkDataSourceFactory = <
 	Boundary extends DataSourceBoundary,
+	NetworkDto,
 >(
 	baseUrl: `https://${string}/`,
-	factory: (client: NetworkClient) => Boundary,
+	factory: (client: NetworkClient<NetworkDto>) => Boundary,
 ) => {
 	const createEndpoint = (endpoint: `/${string}`) => {
 		return [
@@ -39,7 +43,7 @@ export const createNetworkDataSourceFactory = <
 		].join("/");
 	};
 
-	const client: NetworkClient = {
+	const client: NetworkClient<NetworkDto> = {
 		async delete(endpoint, payload) {
 			return request("DELETE", createEndpoint(endpoint), payload);
 		},
@@ -54,7 +58,7 @@ export const createNetworkDataSourceFactory = <
 		},
 	};
 
-	return (): NetworkDataSource<Boundary> => {
+	return (): NetworkDataSource<Boundary, NetworkDto> => {
 		return {
 			...factory(client),
 			client,

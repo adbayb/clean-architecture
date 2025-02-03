@@ -1,6 +1,8 @@
 import type { Result } from "../Result";
+import type { Mapper } from "../Mapper";
 import { Guard } from "../Guard";
 import type { AnyRecord } from "../AnyRecord";
+import type { AnyInput } from "../AnyInput";
 import type { IdValueObject } from "./IdValueObject";
 
 export type Entity<Input = AnyRecord> = Input & {
@@ -8,7 +10,13 @@ export type Entity<Input = AnyRecord> = Input & {
 	isEqualTo: (input: unknown) => input is Entity<Input>;
 };
 
-export type EntityGatewayBoundary<Input = unknown> = Input;
+export type EntityGatewayBoundary<
+	Input extends {
+		toEntity: Mapper<AnyInput, Result<Entity>>;
+	} = {
+		toEntity: Mapper<AnyInput, Result<Entity>>;
+	},
+> = Input;
 
 export const createEntityFactory = <Output extends Entity, Input = unknown>(
 	factory: (helpers: FactoryHelpers, input: Input) => Result<Output>,

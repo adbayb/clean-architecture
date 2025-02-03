@@ -42,6 +42,15 @@ export const Guard = {
 
 		return success(input);
 	},
+	mustBePositiveInteger(input: number) {
+		if (input < 0) {
+			return failure(
+				new TypeError(`\`${input}\` must be a positive integer`),
+			);
+		}
+
+		return success(input);
+	},
 	mustBeRecord<Input>(input: Input) {
 		if (
 			input === null ||

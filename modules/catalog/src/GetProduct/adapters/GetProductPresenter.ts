@@ -21,7 +21,9 @@ export const createGetProductPresenter: PresenterFactory<
 		},
 		ok(input) {
 			onViewModelChange({
-				data: input.content,
+				data: {
+					title: input.title,
+				},
 			});
 		},
 	};

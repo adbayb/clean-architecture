@@ -22,7 +22,7 @@ export const GetProductView = () => {
 	if (viewModel.data) {
 		return (
 			<section>
-				<h3>{viewModel.data}</h3>
+				<h3>{viewModel.data.title}</h3>
 			</section>
 		);
 	}

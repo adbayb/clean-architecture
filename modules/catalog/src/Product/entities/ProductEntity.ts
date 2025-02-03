@@ -5,52 +5,68 @@ import {
 	success,
 } from "@clean-architecture/shared-kernel";
 import type {
+	DataTransferObject,
 	Entity,
 	EntityGatewayBoundary,
+	IdValueObject,
 	Result,
 } from "@clean-architecture/shared-kernel";
 
+import type { ProductDataSourceBoundaryDto } from "../adapters/ProductEntityGateway";
+import { createPriceValueObject } from "../../shared/entities/PriceValueObject";
+import type { PriceValueObject } from "../../shared/entities/PriceValueObject";
 import { createCreatedAtValueObject } from "../../shared/entities/CreatedAtValueObject";
 import type { CreatedAtValueObject } from "../../shared/entities/CreatedAtValueObject";
-import { createAuthorValueObject } from "../../shared/entities/AuthorValueObject";
-import type { AuthorValueObject } from "../../shared/entities/AuthorValueObject";
 
 export type ProductEntity = Entity<{
-	author: AuthorValueObject;
-	content: string;
+	id: IdValueObject;
+	title: string;
+	brand: string;
+	category: string;
 	createdAt: CreatedAtValueObject;
+	price: PriceValueObject;
+	thumbnail: string;
 }>;
 
 export type ProductEntityGatewayBoundary = EntityGatewayBoundary<{
 	getMany: () => Promise<Result<ProductEntity>[]>;
 	getOne: (id: string) => Promise<Result<ProductEntity>>;
+	toEntity: (input: ProductDataSourceBoundaryDto) => Result<ProductEntity>;
 }>;
 
-export type ProductEntityFactoryInput = Pick<ProductEntity, "content"> & {
-	id?: string;
-	fullName: string;
-};
+export type ProductEntityFactoryInput = DataTransferObject<{
+	id: string;
+	title: string;
+	brand: string;
+	category: string;
+	createdAt: string;
+	price: number;
+	thumbnail: string;
+}>;
 
 export const createProductEntity = createEntityFactory<
 	ProductEntity,
 	ProductEntityFactoryInput
->((helpers, { id, content, fullName }) => {
-	const guardContentResult = Guard.mustBeLessThanCharacters(content, 280);
+>((helpers, { id, title, brand, category, createdAt, price, thumbnail }) => {
+	const guardTitleResult = Guard.mustBeLessThanCharacters(title, 280);
 
-	if (guardContentResult.type === "failure") return guardContentResult;
+	if (guardTitleResult.type === "failure") return guardTitleResult;
 
-	const authorValueObject = createAuthorValueObject({ fullName });
+	const priceValueObject = createPriceValueObject(price);
 
-	if (authorValueObject.type === "failure") return authorValueObject;
+	if (priceValueObject.type === "failure") return priceValueObject;
 
 	const entity: ProductEntity = {
 		id: createIdValueObject(id),
-		author: authorValueObject.payload,
-		content,
-		createdAt: createCreatedAtValueObject(undefined),
+		title: guardTitleResult.payload,
+		brand,
+		category,
+		createdAt: createCreatedAtValueObject(createdAt),
 		isEqualTo(input) {
 			return helpers.isEqualTo(entity, input);
 		},
+		price: priceValueObject.payload,
+		thumbnail,
 	};
 
 	return success(entity);

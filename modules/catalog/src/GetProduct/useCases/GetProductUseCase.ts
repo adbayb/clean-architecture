@@ -12,7 +12,7 @@ export type GetProductInputData = UseCaseInputData<{
 }>;
 
 export type GetProductOutputData = UseCaseOutputData<{
-	content: string;
+	title: string;
 }>;
 
 export type GetProductInteractor = UseCaseInteractor<GetProductInputData>;
@@ -30,7 +30,7 @@ export const createGetProductInteractor: UseCaseInteractorFactory<
 			if (entityGatewayResult.type === "failure") {
 				presenter.error(entityGatewayResult.payload);
 			} else {
-				presenter.ok({ content: entityGatewayResult.payload.content });
+				presenter.ok({ title: entityGatewayResult.payload.title });
 			}
 		},
 	};

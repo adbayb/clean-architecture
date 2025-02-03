@@ -1,20 +1,17 @@
 import type {
 	DataSourceBoundary,
-	DataTransferObject,
 	EntityGatewayFactory,
 } from "@clean-architecture/shared-kernel";
 
 import { createProductEntity } from "../entities/ProductEntity";
-import type { ProductEntityGatewayBoundary } from "../entities/ProductEntity";
+import type {
+	ProductEntityFactoryInput,
+	ProductEntityGatewayBoundary,
+} from "../entities/ProductEntity";
 
-type ProductDataSourceDTO = DataTransferObject<{
-	id: string;
-	title: string;
-	price: number;
-}>;
-
+export type ProductDataSourceBoundaryDto = ProductEntityFactoryInput;
 export type ProductDataSourceBoundary =
-	DataSourceBoundary<ProductDataSourceDTO>;
+	DataSourceBoundary<ProductDataSourceBoundaryDto>;
 
 export const createProductEntityGateway: EntityGatewayFactory<
 	ProductEntityGatewayBoundary,
@@ -22,26 +19,21 @@ export const createProductEntityGateway: EntityGatewayFactory<
 > = (dataSource) => {
 	return {
 		async getMany() {
-			const dataSourceOutput = await dataSource.readAll();
+			const dataSourceOutput = await dataSource.readMany();
 
 			if (dataSourceOutput.type === "failure") return [dataSourceOutput];
 
-			return dataSourceOutput.payload.map((item) => toEntity(item));
+			return dataSourceOutput.payload.map((item) => this.toEntity(item));
 		},
 		async getOne(id) {
 			const dataSourceOutput = await dataSource.read(id);
 
 			if (dataSourceOutput.type === "failure") return dataSourceOutput;
 
-			return toEntity(dataSourceOutput.payload);
+			return this.toEntity(dataSourceOutput.payload);
+		},
+		toEntity(input) {
+			return createProductEntity(input);
 		},
 	};
-};
-
-const toEntity = (input: ProductDataSourceDTO) => {
-	return createProductEntity({
-		id: input.id,
-		content: input.title,
-		fullName: input.id,
-	});
 };

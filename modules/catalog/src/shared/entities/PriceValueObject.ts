@@ -5,23 +5,19 @@ import {
 } from "@clean-architecture/shared-kernel";
 import type { Result, ValueObject } from "@clean-architecture/shared-kernel";
 
-type Value = {
-	fullName: string;
-};
+type Value = number;
 
-export type AuthorValueObject = ValueObject<Value>;
+export type PriceValueObject = ValueObject<Value>;
 
-export const createAuthorValueObject = createValueObjectFactory<
-	Result<AuthorValueObject>,
+export const createPriceValueObject = createValueObjectFactory<
+	Result<PriceValueObject>,
 	Value
 >((helpers, input) => {
-	const failedGuard = Guard.against(
-		Guard.mustBeNonEmptyString(input.fullName),
-	);
+	const failedGuard = Guard.against(Guard.mustBePositiveInteger(input));
 
 	if (failedGuard) return failedGuard;
 
-	const valueObject: AuthorValueObject = {
+	const valueObject: PriceValueObject = {
 		isEqualTo(value) {
 			return helpers.isEqualTo(valueObject, value);
 		},
