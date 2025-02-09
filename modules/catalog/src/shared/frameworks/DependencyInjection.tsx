@@ -4,7 +4,7 @@ import {
 	useDependencyInjection as useSharedDependencyInjection,
 } from "@clean-architecture/shared-kernel";
 
-import { createProductDummyJsonDataSource } from "../../Product/frameworks/ProductDummyJsonDataSource";
+import { createProductsDummyJsonDataSource } from "../../Product/frameworks/DummyJsonDataSource";
 import { createProductEntityGateway } from "../../Product";
 import type { ProductEntityGatewayBoundary } from "../../Product";
 
@@ -14,7 +14,7 @@ export const DependencyInjection = ({ children }: DependencyInjectionProps) => {
 	return (
 		<SharedDependencyInjection
 			entityGateway={createProductEntityGateway(
-				createProductDummyJsonDataSource(),
+				createProductsDummyJsonDataSource(),
 			)}
 		>
 			{children}

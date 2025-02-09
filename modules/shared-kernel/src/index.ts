@@ -8,7 +8,11 @@ export { createIdValueObject } from "./entities/IdValueObject";
 
 /** Application-related shared interfaces. */
 export type { UseCaseInputData } from "./useCases/UseCaseInputData";
-export type { UseCaseOutputData } from "./useCases/UseCaseOutputData";
+export type {
+	UseCaseOutputData,
+	GetUseCaseOutputDataFailureType,
+	GetUseCaseOutputDataSuccessType,
+} from "./useCases/UseCaseOutputData";
 export type {
 	UseCaseInteractor,
 	UseCaseInteractorFactory,

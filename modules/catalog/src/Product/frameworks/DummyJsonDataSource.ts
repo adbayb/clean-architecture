@@ -22,7 +22,7 @@ type ProductDummyJsonDataSourceDto = {
 	thumbnail: string;
 };
 
-export const createProductDummyJsonDataSource = createNetworkDataSourceFactory<
+export const createProductsDummyJsonDataSource = createNetworkDataSourceFactory<
 	ProductDataSourceBoundary,
 	ProductDummyJsonDataSourceDto
 >("https://dummyjson.com/products/", (client) => {

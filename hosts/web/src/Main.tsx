@@ -4,7 +4,7 @@ import * as Catalog from "@clean-architecture/catalog";
 export const Main = () => {
 	return (
 		<Catalog.DependencyInjection>
-			<Catalog.GetProductView />
+			<Catalog.GetProductsView />
 		</Catalog.DependencyInjection>
 	);
 };
