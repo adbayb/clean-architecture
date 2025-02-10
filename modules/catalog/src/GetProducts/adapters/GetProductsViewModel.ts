@@ -4,7 +4,8 @@ export type GetProductsViewModel = ViewModel<{
 	data?: {
 		title: string;
 		brand: string;
-		price: number;
+		price: string;
+		thumbnail: string;
 	}[];
-	error?: Error[];
+	error?: string[];
 }>;

@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import type { ReactElement } from "react";
+import { Box, Card, Heading, Text } from "@clean-architecture/shared-kernel";
 import type { Hook } from "@clean-architecture/shared-kernel";
 
 import { createGetProductsInteractor } from "../useCases/GetProductsUseCase";
@@ -8,24 +10,53 @@ import { createGetProductsController } from "../adapters/GetProductsController";
 import type { GetProductsController } from "../adapters/GetProductsController";
 import { useDependencyInjection } from "../../shared/frameworks/DependencyInjection";
 
-export const GetProductsView = () => {
+type GetProductsViewProps = {
+	readonly actionSlot: ReactElement;
+};
+
+export const GetProductsView = ({ actionSlot }: GetProductsViewProps) => {
 	const { controller, viewModel } = useGetProducts();
 
 	useEffect(() => {
-		void controller.execute({ id: "1" });
+		void controller.execute({});
 	}, [controller]);
 
 	if (viewModel.error) {
-		return <p style={{ color: "red" }}>{String(viewModel.error)}</p>;
+		return viewModel.error.map((error) => <Text key={error}>{error}</Text>);
 	}
 
 	if (viewModel.data) {
 		return (
-			<section>
-				{viewModel.data.map((item) => (
-					<p key={item.title}>{JSON.stringify(item)}</p>
-				))}
-			</section>
+			<Box
+				alignItems="center"
+				display="flex"
+				flexDirection="column"
+				gap="16"
+				justifyContent="center"
+				paddingBlock="12"
+				paddingInline="24"
+			>
+				<Heading size="5xl">Catalog</Heading>
+				<Box
+					alignItems="center"
+					display="flex"
+					flexWrap="wrap"
+					gap="4"
+					justifyContent="center"
+				>
+					{viewModel.data.map(({ title, price, thumbnail }) => (
+						<Card
+							actionSlot={actionSlot}
+							header={{ title, description: price }}
+							image={{
+								accessibilityLabel: title,
+								source: thumbnail,
+							}}
+							key={title}
+						/>
+					))}
+				</Box>
+			</Box>
 		);
 	}
 

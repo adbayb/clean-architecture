@@ -15,7 +15,7 @@
 		"source.organizeImports": "never",
 		"source.organizeLinkDefinitions": "explicit",
 		"source.removeUnused.ts": "never",
-		"source.removeUnusedImports": "explicit",
+		"source.removeUnusedImports": "never",
 		"source.sortImports": "never"
 	},
 	"workbench.editor.labelFormat": "short",

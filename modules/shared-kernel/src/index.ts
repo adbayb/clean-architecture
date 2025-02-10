@@ -34,6 +34,7 @@ export {
 } from "./frameworks/DependencyInjection";
 export type { Hook } from "./frameworks/Hook";
 export { createNetworkDataSourceFactory } from "./frameworks/DataSource";
+export * from "./frameworks/designSystem";
 
 /** Uncategorized shared interfaces. */
 export type { DataTransferObject } from "./DataTransferObject";
