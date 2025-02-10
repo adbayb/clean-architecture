@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Box, Button, Grid, Text } from "@clean-architecture/shared-kernel";
 import type { Hook } from "@clean-architecture/shared-kernel";
 
 import { createGetProductsInteractor } from "../useCases/GetProductsUseCase";
@@ -16,16 +17,26 @@ export const GetProductsView = () => {
 	}, [controller]);
 
 	if (viewModel.error) {
-		return <p style={{ color: "red" }}>{String(viewModel.error)}</p>;
+		return <Text>{viewModel.error}</Text>;
 	}
 
 	if (viewModel.data) {
 		return (
-			<section>
-				{viewModel.data.map((item) => (
-					<p key={item.title}>{JSON.stringify(item)}</p>
+			<Grid
+				gap="6"
+				templateColumns="repeat(3, 1fr)"
+			>
+				{viewModel.data.map(({ title, price, thumbnail }) => (
+					<Box
+						as="section"
+						key={title}
+					>
+						<Text>{title}</Text>
+						<Button>Plop</Button>
+						{JSON.stringify({ title, price, thumbnail })}
+					</Box>
 				))}
-			</section>
+			</Grid>
 		);
 	}
 

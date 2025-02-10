@@ -16,12 +16,22 @@ export const createGetProductsPresenter: PresenterFactory<
 	return {
 		error(input) {
 			onViewModelChange({
-				error: input,
+				error: input.map(String),
 			});
 		},
 		ok(input) {
 			onViewModelChange({
-				data: input,
+				data: input.map(({ title, brand, price, thumbnail }) => {
+					return {
+						title: title.toLocaleUpperCase(),
+						brand,
+						price: new Intl.NumberFormat("en-EN", {
+							currency: "USD",
+							style: "currency",
+						}).format(price),
+						thumbnail,
+					};
+				}),
 			});
 		},
 	};
