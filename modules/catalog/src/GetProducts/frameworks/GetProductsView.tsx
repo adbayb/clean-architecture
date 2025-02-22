@@ -21,30 +21,32 @@ export const GetProductsView = ({ actionSlot }: GetProductsViewProps) => {
 		void controller.execute({});
 	}, [controller]);
 
-	if (viewModel.error) {
-		return viewModel.error.map((error) => <Text key={error}>{error}</Text>);
-	}
-
-	if (viewModel.data) {
-		return (
+	return (
+		<Box
+			alignItems="center"
+			display="flex"
+			flexDirection="column"
+			gap="16"
+			justifyContent="center"
+			paddingBlock="12"
+			paddingInline="24"
+		>
+			<Heading size="5xl">Catalog</Heading>
 			<Box
 				alignItems="center"
 				display="flex"
-				flexDirection="column"
-				gap="16"
+				flexWrap="wrap"
+				gap="4"
 				justifyContent="center"
-				paddingBlock="12"
-				paddingInline="24"
 			>
-				<Heading size="5xl">Catalog</Heading>
-				<Box
-					alignItems="center"
-					display="flex"
-					flexWrap="wrap"
-					gap="4"
-					justifyContent="center"
-				>
-					{viewModel.data.map(({ title, price, thumbnail }) => (
+				{viewModel.map(({ payload, type }) => {
+					if (type === "failure") {
+						return <Text key={payload}>{payload}</Text>;
+					}
+
+					const { title, price, thumbnail } = payload;
+
+					return (
 						<Card
 							actionSlot={actionSlot}
 							header={{ title, description: price }}
@@ -54,13 +56,11 @@ export const GetProductsView = ({ actionSlot }: GetProductsViewProps) => {
 							}}
 							key={title}
 						/>
-					))}
-				</Box>
+					);
+				})}
 			</Box>
-		);
-	}
-
-	return null;
+		</Box>
+	);
 };
 
 const useGetProducts: Hook<
@@ -68,7 +68,7 @@ const useGetProducts: Hook<
 	GetProductsViewModel
 > = () => {
 	const { entityGateway } = useDependencyInjection();
-	const [viewModel, setViewModel] = useState<GetProductsViewModel>({});
+	const [viewModel, setViewModel] = useState<GetProductsViewModel>([]);
 
 	const presenter = useMemo(
 		() => createGetProductsPresenter(setViewModel),

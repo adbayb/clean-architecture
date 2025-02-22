@@ -1,6 +1,4 @@
 import type {
-	GetUseCaseOutputDataFailureType,
-	GetUseCaseOutputDataSuccessType,
 	UseCaseInputData,
 	UseCaseInteractor,
 	UseCaseInteractorFactory,
@@ -17,8 +15,8 @@ export type GetProductsOutputData = UseCaseOutputData<
 		brand: string;
 		price: number;
 		thumbnail: string;
-	}[],
-	Error[]
+	},
+	Error
 >;
 
 export type GetProductsInteractor = UseCaseInteractor<GetProductsInputData>;
@@ -32,18 +30,13 @@ export const createGetProductsInteractor: UseCaseInteractorFactory<
 	return {
 		async execute() {
 			const results = await entityGateway.getMany();
-
-			const presenterErrorOutput: GetUseCaseOutputDataFailureType<GetProductsOutputData> =
-				[];
-
-			const presenterSuccessOutput: GetUseCaseOutputDataSuccessType<GetProductsOutputData> =
-				[];
+			const presenterInput: GetProductsOutputData = [];
 
 			results.forEach(({ payload, type }) => {
 				if (type === "failure") {
-					presenterErrorOutput.push(payload);
+					presenterInput.push(payload);
 				} else {
-					presenterSuccessOutput.push({
+					presenterInput.push({
 						title: payload.title,
 						brand: payload.brand,
 						price: payload.price.value,
@@ -52,16 +45,7 @@ export const createGetProductsInteractor: UseCaseInteractorFactory<
 				}
 			});
 
-			/*
-			 * TODO:
-			 * - Simplify the presenter interface: only one single method required (display) that can display freely any kind of data structure (including error)
-			 * - Update the logic to embed the error at item level to allow scoping error at item level without impacting other successful item retrievals.
-			 */
-			if (presenterErrorOutput.length > 0) {
-				presenter.error(presenterErrorOutput);
-			} else {
-				presenter.ok(presenterSuccessOutput);
-			}
+			presenter.display(presenterInput);
 		},
 	};
 };

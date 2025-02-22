@@ -1,4 +1,4 @@
-import type { DataTransferObject } from "../DataTransferObject";
-
-export type ViewModel<Input extends DataTransferObject = DataTransferObject> =
-	DataTransferObject<Input>;
+export type ViewModel<SuccessInput = unknown, FailureInput = unknown> = (
+	| { payload: FailureInput; type: "failure" }
+	| { payload: SuccessInput; type: "success" }
+)[];
