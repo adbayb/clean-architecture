@@ -5,7 +5,6 @@ import {
 	success,
 } from "@clean-architecture/shared-kernel";
 import type {
-	DataTransferObject,
 	Entity,
 	EntityGatewayBoundary,
 	IdValueObject,
@@ -34,7 +33,7 @@ export type ProductEntityGatewayBoundary = EntityGatewayBoundary<{
 	toEntity: (input: ProductDataSourceBoundaryDto) => Result<ProductEntity>;
 }>;
 
-export type ProductEntityFactoryInput = DataTransferObject<{
+export type ProductEntityFactoryInput = {
 	id: string;
 	title: string;
 	brand: string;
@@ -42,7 +41,7 @@ export type ProductEntityFactoryInput = DataTransferObject<{
 	createdAt: string;
 	price: number;
 	thumbnail: string;
-}>;
+};
 
 export const createProductEntity = createEntityFactory<
 	ProductEntity,

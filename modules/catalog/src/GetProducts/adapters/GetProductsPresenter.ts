@@ -15,21 +15,30 @@ export const createGetProductsPresenter: PresenterFactory<
 > = (onViewModelChange) => {
 	return {
 		display(input) {
-			const viewModel: GetProductsViewModel = input.map((item) => {
-				if (item instanceof Error) {
-					return { payload: formatError(item), type: "failure" };
-				}
+			const viewModel: GetProductsViewModel = input.map(
+				({ payload, type }) => {
+					if (type === "failure") {
+						return {
+							payload: formatError(payload),
+							type: "failure",
+						};
+					}
 
-				return { payload: formatProduct(item), type: "success" };
-			});
+					return { payload: formatProduct(payload), type: "success" };
+				},
+			);
 
 			onViewModelChange(viewModel);
 		},
 	};
 };
 
-// eslint-disable-next-line unicorn/prefer-native-coercion-functions
-const formatError = (input: Extract<GetProductsOutputData[number], Error>) => {
+type GetProductOutputData = GetProductsOutputData[number];
+
+const formatError = (
+	input: Extract<GetProductOutputData, { type: "failure" }>["payload"],
+	// eslint-disable-next-line unicorn/prefer-native-coercion-functions
+) => {
 	return String(input);
 };
 
@@ -38,7 +47,7 @@ const formatProduct = ({
 	brand,
 	price,
 	thumbnail,
-}: Exclude<GetProductsOutputData[number], Error>) => {
+}: Extract<GetProductOutputData, { type: "success" }>["payload"]) => {
 	return {
 		title: title.toLocaleUpperCase(),
 		brand,

@@ -17,7 +17,7 @@ export type GetProductsOutputData = UseCaseOutputData<
 		thumbnail: string;
 	},
 	Error
->;
+>[];
 
 export type GetProductsInteractor = UseCaseInteractor<GetProductsInputData>;
 
@@ -34,13 +34,16 @@ export const createGetProductsInteractor: UseCaseInteractorFactory<
 
 			results.forEach(({ payload, type }) => {
 				if (type === "failure") {
-					presenterInput.push(payload);
+					presenterInput.push({ payload, type: "failure" });
 				} else {
 					presenterInput.push({
-						title: payload.title,
-						brand: payload.brand,
-						price: payload.price.value,
-						thumbnail: payload.thumbnail,
+						payload: {
+							title: payload.title,
+							brand: payload.brand,
+							price: payload.price.value,
+							thumbnail: payload.thumbnail,
+						},
+						type: "success",
 					});
 				}
 			});

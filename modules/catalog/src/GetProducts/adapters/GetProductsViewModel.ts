@@ -8,4 +8,4 @@ export type GetProductsViewModel = ViewModel<
 		thumbnail: string;
 	},
 	string
->;
+>[];

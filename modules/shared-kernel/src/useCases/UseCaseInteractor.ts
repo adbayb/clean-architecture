@@ -10,7 +10,7 @@ export type UseCaseInteractor<InputData extends UseCaseInputData> =
 export type UseCaseInteractorFactory<
 	Output extends UseCaseInteractor<InputData>,
 	InputData extends UseCaseInputData,
-	OutputData extends UseCaseOutputData,
+	OutputData extends UseCaseOutputData | UseCaseOutputData[],
 	EntityGateway extends EntityGatewayBoundary,
 > = (
 	entityGateway: EntityGateway,

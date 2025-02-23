@@ -1,3 +1,3 @@
-import type { AnyRecord } from "./AnyRecord";
-
-export type DataTransferObject<Input extends AnyRecord = AnyRecord> = Input;
+export type DataTransferObject<SuccessInput, FailureInput> =
+	| { payload: FailureInput; type: "failure" }
+	| { payload: SuccessInput; type: "success" };

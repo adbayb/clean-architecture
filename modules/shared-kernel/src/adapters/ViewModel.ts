@@ -1,4 +1,8 @@
-export type ViewModel<SuccessInput = unknown, FailureInput = unknown> = (
-	| { payload: FailureInput; type: "failure" }
-	| { payload: SuccessInput; type: "success" }
-)[];
+import type { DataTransferObject } from "../DataTransferObject";
+
+type FailureInputConstraint = string;
+
+export type ViewModel<
+	SuccessInput = unknown,
+	FailureInput extends FailureInputConstraint = FailureInputConstraint,
+> = DataTransferObject<SuccessInput, FailureInput>;

@@ -1,5 +1,3 @@
-import type { DataTransferObject } from "../DataTransferObject";
+import type { AnyRecord } from "../AnyRecord";
 
-export type UseCaseInputData<
-	Input extends DataTransferObject = DataTransferObject,
-> = DataTransferObject<Input>;
+export type UseCaseInputData<Input extends AnyRecord = AnyRecord> = Input;
