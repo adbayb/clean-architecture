@@ -42,7 +42,7 @@
 	"devDependencies": {
 		"quickbundle": "2.9.0",
 		"react": "19.0.0",
-		"vitest": "3.0.6"
+		"vitest": "3.0.7"
 	},
 	"peerDependencies": {
 		"react": "^18.0.0 || ^19.0.0"
