@@ -1,16 +1,14 @@
 import type { FunctionComponent, PropsWithChildren, ReactElement } from "react";
-import {
-	Button as ChakraButton,
-	Card as ChakraCard,
-	Heading as ChakraHeading,
-	Image as ChakraImage,
-	Text as ChakraText,
-} from "@chakra-ui/react";
+import { Card as ChakraCard, Image } from "@chakra-ui/react";
 
 export {
 	ChakraProvider,
 	defaultSystem as chakraDefaultSystem,
 	Box,
+	Button,
+	Heading,
+	Image,
+	Text,
 } from "@chakra-ui/react";
 
 export type CardProps = {
@@ -79,39 +77,4 @@ export const Card = ({
 			<CardFooter justifyContent="flex-end">{actionSlot}</CardFooter>
 		</CardRoot>
 	);
-};
-
-export const Button: FunctionComponent<{
-	readonly children: string;
-	readonly onClick: () => void;
-	readonly variant?: "outline" | "solid";
-}> = (props) => <ChakraButton {...props} />;
-
-export const Heading: FunctionComponent<{
-	readonly children: string;
-	readonly size?:
-		| "2xl"
-		| "3xl"
-		| "4xl"
-		| "5xl"
-		| "6xl"
-		| "7xl"
-		| "lg"
-		| "md"
-		| "sm"
-		| "xl"
-		| "xs";
-}> = (props) => <ChakraHeading {...props} />;
-
-export const Image: FunctionComponent<{
-	readonly alt?: string;
-	readonly rounded?: "md";
-	readonly src?: string;
-}> = (props) => <ChakraImage {...props} />;
-
-export const Text: FunctionComponent<{
-	readonly children: string;
-	readonly color?: string;
-}> = (props) => {
-	return <ChakraText {...props} />;
 };
