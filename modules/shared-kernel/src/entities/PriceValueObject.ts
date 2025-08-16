@@ -1,9 +1,5 @@
-import {
-	Guard,
-	createValueObjectFactory,
-	success,
-} from "@clean-architecture/shared-kernel";
-import type { Result, ValueObject } from "@clean-architecture/shared-kernel";
+import { Guard, createValueObjectFactory, success } from "../primitives";
+import type { Result, ValueObject } from "../primitives";
 
 type Value = number;
 

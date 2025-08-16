@@ -9,7 +9,7 @@ import * as Catalog from "@clean-architecture/catalog";
 export const Main = () => {
 	return (
 		<ChakraProvider value={chakraDefaultSystem}>
-			<Catalog.DependencyInjection>
+			<Catalog.ProductEntityGatewayProvider>
 				<Catalog.GetProductsView
 					// TODO: expose the action slot component via the bookmark module
 					actionSlot={
@@ -23,7 +23,7 @@ export const Main = () => {
 						</Button>
 					}
 				/>
-			</Catalog.DependencyInjection>
+			</Catalog.ProductEntityGatewayProvider>
 		</ChakraProvider>
 	);
 };

@@ -1,5 +1,5 @@
-import { createValueObjectFactory } from "@clean-architecture/shared-kernel";
-import type { ValueObject } from "@clean-architecture/shared-kernel";
+import { createValueObjectFactory } from "../primitives";
+import type { ValueObject } from "../primitives";
 
 type Value = string;
 

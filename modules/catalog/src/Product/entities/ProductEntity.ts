@@ -1,21 +1,21 @@
 import {
 	Guard,
+	createCreatedAtValueObject,
 	createEntityFactory,
 	createIdValueObject,
+	createPriceValueObject,
 	success,
 } from "@clean-architecture/shared-kernel";
 import type {
+	CreatedAtValueObject,
 	Entity,
 	EntityGatewayBoundary,
 	IdValueObject,
+	PriceValueObject,
 	Result,
 } from "@clean-architecture/shared-kernel";
 
 import type { ProductDataSourceBoundaryDto } from "../adapters/ProductEntityGateway";
-import { createPriceValueObject } from "../../shared/entities/PriceValueObject";
-import type { PriceValueObject } from "../../shared/entities/PriceValueObject";
-import { createCreatedAtValueObject } from "../../shared/entities/CreatedAtValueObject";
-import type { CreatedAtValueObject } from "../../shared/entities/CreatedAtValueObject";
 
 export type ProductEntity = Entity<{
 	id: IdValueObject;

@@ -8,7 +8,7 @@ import type { GetProductsViewModel } from "../adapters/GetProductsViewModel";
 import { createGetProductsPresenter } from "../adapters/GetProductsPresenter";
 import { createGetProductsController } from "../adapters/GetProductsController";
 import type { GetProductsController } from "../adapters/GetProductsController";
-import { useDependencyInjection } from "../../shared/frameworks/DependencyInjection";
+import { useProductEntityGateway } from "../../Product";
 
 type GetProductsViewProps = {
 	readonly actionSlot: ReactElement;
@@ -67,7 +67,7 @@ const useGetProducts: Hook<
 	GetProductsController,
 	GetProductsViewModel
 > = () => {
-	const { entityGateway } = useDependencyInjection();
+	const { entityGateway } = useProductEntityGateway();
 	const [viewModel, setViewModel] = useState<GetProductsViewModel>([]);
 
 	const presenter = useMemo(
