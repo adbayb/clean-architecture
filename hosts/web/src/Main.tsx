@@ -14,7 +14,6 @@ export const Main = () => {
 					// TODO: expose the action slot component via the bookmark module
 					actionSlot={
 						<Button
-							// eslint-disable-next-line react/jsx-no-bind
 							onClick={() => {
 								console.log("Bookmark");
 							}}

@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, use, useMemo } from "react";
 import type { Context, PropsWithChildren } from "react";
 
 import type { EntityGatewayBoundary } from "../entities/Entity";
@@ -33,16 +33,16 @@ export const DependencyInjection = <
 	}, [entityGateway]);
 
 	return (
-		<DependencyInjectionContext.Provider value={value}>
+		<DependencyInjectionContext value={value}>
 			{children}
-		</DependencyInjectionContext.Provider>
+		</DependencyInjectionContext>
 	);
 };
 
 export const useDependencyInjection = <
 	EntityGateway extends EntityGatewayBoundary,
 >() => {
-	const contextValue = useContext(
+	const contextValue = use(
 		DependencyInjectionContext as Context<DependencyInjectionContextValue<EntityGateway> | null>,
 	);
 
