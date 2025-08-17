@@ -13,9 +13,9 @@ The Clean Architecture is an architectural pattern that enables the creation of 
 
 Following the ["decompose by subdomain" pattern](https://microservices.io/patterns/decomposition/decompose-by-subdomain.html), a **modular architecture** has also been implemented to encapsulate and group all concerns from presentation to data per bounded context[^1]. This modular monolith approach enables decision autonomy within a module boundary[^2] and the creation of [self-contained systems](https://scs-architecture.org/) centered around business capabilities[^3].
 
-Furthermore, drawing inspiration from [the Vertical Slice Architecture](https://www.jimmybogard.com/vertical-slice-architecture/) and the package by [feature](https://phauer.com/2020/package-by-feature/)/[component](https://learning-notes.mistermicheels.com/architecture-design/reference-architectures/package-by-feature-or-component/) pattern, top-level directories within a module (excluding the `shared` folder) are centered around **business features**[^3] and, optionally, around actors for entities coupled to gateways.  
+Furthermore, drawing inspiration from [the Vertical Slice Architecture](https://www.jimmybogard.com/vertical-slice-architecture/) and the package by [feature](https://phauer.com/2020/package-by-feature/)/[component](https://learning-notes.mistermicheels.com/architecture-design/reference-architectures/package-by-feature-or-component/) pattern, top-level directories within a module are centered around **business features**[^3] and actors for shareable entities coupled to gateways.  
 It allows not only to [scream the application intent](https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html) allowing better discoverability from the domain point of view but also to create cohesive and loosely-coupled components.
-Second-level directories and the `shared` directory are organized following the clean architecture layers to enforce/materialize the dependency rule and bring clarity about each layer scope.
+Second-level directories are organized following the clean architecture layers to enforce/materialize the dependency rule and bring clarity about each layer scope.
 
 [^1]: In this repository, a [bounded context](https://martinfowler.com/bliki/BoundedContext.html) is implemented by one module, so a bounded context is equivalent to a module here. However, it's not always the case since [a bounded context is not strictly equivalent to a module](https://stackoverflow.com/a/77923055). Indeed, while a module is a technical-oriented concept that defines logical boundaries in the code, a [bounded context](https://deviq.com/domain-driven-design/bounded-context) is a business-oriented one (domain-driven design tactical pattern) that represents a [cohesive area of the business domain](https://ddd-practitioners.com/2023/03/07/the-difference-between-domains-subdomains-and-bounded-contexts/). A module is a technical enabler to implement a bounded context, which can contain one or multiple modules.
 
@@ -42,7 +42,7 @@ Second-level directories and the `shared` directory are organized following the 
 
 #### A special module: the Shared Kernel.
 
-See [documentation](./modules/shared-kernel/).
+See [documentation](./modules/shared/).
 
 ### Layers
 

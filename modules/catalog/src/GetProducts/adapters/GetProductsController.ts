@@ -1,7 +1,4 @@
-import type {
-	Controller,
-	ControllerFactory,
-} from "@clean-architecture/shared-kernel";
+import type { Controller, ControllerFactory } from "@clean-architecture/shared";
 
 import type { GetProductsInputData } from "../useCases/GetProductsUseCase";
 

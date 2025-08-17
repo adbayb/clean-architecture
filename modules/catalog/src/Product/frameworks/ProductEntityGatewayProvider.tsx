@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react";
 import {
 	DependencyInjection,
 	useDependencyInjection,
-} from "@clean-architecture/shared-kernel";
+} from "@clean-architecture/shared";
 
 import type { ProductEntityGatewayBoundary } from "../entities/ProductEntity";
 import { createProductEntityGateway } from "../adapters/ProductEntityGateway";

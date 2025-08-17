@@ -5,7 +5,7 @@ import {
 	createIdValueObject,
 	createPriceValueObject,
 	success,
-} from "@clean-architecture/shared-kernel";
+} from "@clean-architecture/shared";
 import type {
 	CreatedAtValueObject,
 	Entity,
@@ -13,7 +13,7 @@ import type {
 	IdValueObject,
 	PriceValueObject,
 	Result,
-} from "@clean-architecture/shared-kernel";
+} from "@clean-architecture/shared";
 
 import type { ProductDataSourceBoundaryDto } from "../adapters/ProductEntityGateway";
 

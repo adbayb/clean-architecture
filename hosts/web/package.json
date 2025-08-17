@@ -10,7 +10,7 @@
 	},
 	"dependencies": {
 		"@clean-architecture/catalog": "workspace:^",
-		"@clean-architecture/shared-kernel": "workspace:^",
+		"@clean-architecture/shared": "workspace:^",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1"
 	},

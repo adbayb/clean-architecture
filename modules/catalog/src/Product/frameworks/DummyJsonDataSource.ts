@@ -1,7 +1,7 @@
 import {
 	createNetworkDataSourceFactory,
 	success,
-} from "@clean-architecture/shared-kernel";
+} from "@clean-architecture/shared";
 
 import type { ProductDataSourceBoundary } from "../adapters/ProductEntityGateway";
 

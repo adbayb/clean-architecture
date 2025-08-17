@@ -17,9 +17,9 @@ importers:
       '@clean-architecture/catalog':
         specifier: workspace:^
         version: link:../../modules/catalog
-      '@clean-architecture/shared-kernel':
+      '@clean-architecture/shared':
         specifier: workspace:^
-        version: link:../../modules/shared-kernel
+        version: link:../../modules/shared
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -42,9 +42,9 @@ importers:
 
   modules/catalog:
     devDependencies:
-      '@clean-architecture/shared-kernel':
+      '@clean-architecture/shared':
         specifier: workspace:*
-        version: link:../shared-kernel
+        version: link:../shared
       '@types/react':
         specifier: 19.1.10
         version: 19.1.10
@@ -58,7 +58,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.12)(@types/node@24.3.0)(jiti@2.5.1)(yaml@2.8.1)
 
-  modules/shared-kernel:
+  modules/shared:
     dependencies:
       '@chakra-ui/react':
         specifier: ^3.24.2

@@ -1,4 +1,4 @@
-import type { ViewModel } from "@clean-architecture/shared-kernel";
+import type { ViewModel } from "@clean-architecture/shared";
 
 export type GetProductsViewModel = ViewModel<
 	{

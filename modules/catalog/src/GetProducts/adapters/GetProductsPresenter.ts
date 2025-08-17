@@ -1,7 +1,4 @@
-import type {
-	Presenter,
-	PresenterFactory,
-} from "@clean-architecture/shared-kernel";
+import type { Presenter, PresenterFactory } from "@clean-architecture/shared";
 
 import type { GetProductsOutputData } from "../useCases/GetProductsUseCase";
 import type { GetProductsViewModel } from "./GetProductsViewModel";

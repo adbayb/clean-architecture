@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ReactElement } from "react";
-import { Box, Card, Heading, Text } from "@clean-architecture/shared-kernel";
-import type { Hook } from "@clean-architecture/shared-kernel";
+import { Box, Card, Heading, Text } from "@clean-architecture/shared";
+import type { Hook } from "@clean-architecture/shared";
 
 import { createGetProductsInteractor } from "../useCases/GetProductsUseCase";
 import type { GetProductsViewModel } from "../adapters/GetProductsViewModel";

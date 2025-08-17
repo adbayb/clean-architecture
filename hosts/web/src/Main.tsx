@@ -3,7 +3,7 @@ import {
 	Button,
 	ChakraProvider,
 	chakraDefaultSystem,
-} from "@clean-architecture/shared-kernel";
+} from "@clean-architecture/shared";
 import * as Catalog from "@clean-architecture/catalog";
 
 export const Main = () => {

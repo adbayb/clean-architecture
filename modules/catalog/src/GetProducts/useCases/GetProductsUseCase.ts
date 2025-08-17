@@ -3,7 +3,7 @@ import type {
 	UseCaseInteractor,
 	UseCaseInteractorFactory,
 	UseCaseOutputData,
-} from "@clean-architecture/shared-kernel";
+} from "@clean-architecture/shared";
 
 import type { ProductEntityGatewayBoundary } from "../../Product";
 

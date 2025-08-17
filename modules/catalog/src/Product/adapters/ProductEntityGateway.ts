@@ -1,7 +1,7 @@
 import type {
 	DataSourceBoundary,
 	EntityGatewayFactory,
-} from "@clean-architecture/shared-kernel";
+} from "@clean-architecture/shared";
 
 import { createProductEntity } from "../entities/ProductEntity";
 import type {
