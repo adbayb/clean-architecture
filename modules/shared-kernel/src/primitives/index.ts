@@ -1,36 +1,30 @@
 /** Domain-related shared interfaces. */
-export type { Entity, EntityGatewayBoundary } from "./entities/Entity";
-export { createEntityFactory } from "./entities/Entity";
-export type { ValueObject } from "./entities/ValueObject";
-export { createValueObjectFactory } from "./entities/ValueObject";
-export type { IdValueObject } from "./entities/IdValueObject";
-export { createIdValueObject } from "./entities/IdValueObject";
+export type { Entity, EntityGatewayBoundary } from "./Entity";
+export { createEntityFactory } from "./Entity";
+export type { ValueObject } from "./ValueObject";
+export { createValueObjectFactory } from "./ValueObject";
 
 /** Application-related shared interfaces. */
-export type { UseCaseInputData } from "./useCases/UseCaseInputData";
-export type { UseCaseOutputData } from "./useCases/UseCaseOutputData";
+export type { UseCaseInputData } from "./UseCaseInputData";
+export type { UseCaseOutputData } from "./UseCaseOutputData";
 export type {
 	UseCaseInteractor,
 	UseCaseInteractorFactory,
-} from "./useCases/UseCaseInteractor";
+} from "./UseCaseInteractor";
 
 /** Infrastructure-related shared interfaces. */
-export type {
-	DataSourceBoundary,
-	EntityGatewayFactory,
-} from "./adapters/EntityGateway";
-export type { Controller, ControllerFactory } from "./adapters/Controller";
-export type { Presenter, PresenterFactory } from "./adapters/Presenter";
-export type { ViewModel } from "./adapters/ViewModel";
+export type { DataSourceBoundary, EntityGatewayFactory } from "./EntityGateway";
+export type { Controller, ControllerFactory } from "./Controller";
+export type { Presenter, PresenterFactory } from "./Presenter";
+export type { ViewModel } from "./ViewModel";
 
 /** Framework/Driver-related shared interfaces. */
 export {
 	DependencyInjection,
 	useDependencyInjection,
-} from "./frameworks/DependencyInjection";
-export type { Hook } from "./frameworks/Hook";
-export { createNetworkDataSourceFactory } from "./frameworks/DataSource";
-export * from "./frameworks/designSystem";
+} from "./DependencyInjection";
+export type { Hook } from "./Hook";
+export { createNetworkDataSourceFactory } from "./DataSource";
 
 /** Uncategorized shared interfaces. */
 export type { DataTransferObject } from "./DataTransferObject";

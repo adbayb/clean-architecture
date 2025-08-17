@@ -1,4 +1,4 @@
-import type { DataTransferObject } from "../DataTransferObject";
+import type { DataTransferObject } from "./DataTransferObject";
 
 type FailureInputConstraint = string;
 

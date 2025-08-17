@@ -1,9 +1,9 @@
-import type { Result } from "../Result";
-import type { Mapper } from "../Mapper";
-import { Guard } from "../Guard";
-import type { AnyRecord } from "../AnyRecord";
-import type { AnyInput } from "../AnyInput";
-import type { IdValueObject } from "./IdValueObject";
+import type { IdValueObject } from "../entities/IdValueObject";
+import type { Result } from "./Result";
+import type { Mapper } from "./Mapper";
+import { Guard } from "./Guard";
+import type { AnyRecord } from "./AnyRecord";
+import type { AnyInput } from "./AnyInput";
 
 export type Entity<Input = AnyRecord> = Input & {
 	id: IdValueObject;

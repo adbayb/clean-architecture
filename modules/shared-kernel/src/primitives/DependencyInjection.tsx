@@ -1,8 +1,8 @@
 import { createContext, use, useMemo } from "react";
 import type { Context, PropsWithChildren } from "react";
 
-import type { EntityGatewayBoundary } from "../entities/Entity";
-import { Guard } from "../Guard";
+import { Guard } from "./Guard";
+import type { EntityGatewayBoundary } from "./Entity";
 
 type DependencyInjectionContextValue<
 	EntityGateway extends EntityGatewayBoundary,

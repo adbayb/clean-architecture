@@ -1,6 +1,6 @@
-import type { UseCaseOutputData } from "../useCases/UseCaseOutputData";
-import type { UseCaseOutputBoundary } from "../useCases/UseCaseOutputBoundary";
 import type { ViewModel } from "./ViewModel";
+import type { UseCaseOutputData } from "./UseCaseOutputData";
+import type { UseCaseOutputBoundary } from "./UseCaseOutputBoundary";
 
 /**
  * A presenter maps data structures returned by the use case interactor into data structures most convenient for the view.

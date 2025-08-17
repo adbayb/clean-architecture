@@ -1,7 +1,7 @@
 import { failure, success } from "@open-vanilla/result";
 import type { Result } from "@open-vanilla/result";
 
-import type { DataSourceBoundary } from "../adapters/EntityGateway";
+import type { DataSourceBoundary } from "./EntityGateway";
 
 type NetworkClient<NetworkDto> = {
 	delete: (

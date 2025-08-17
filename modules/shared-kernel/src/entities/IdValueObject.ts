@@ -1,5 +1,5 @@
-import { createValueObjectFactory } from "./ValueObject";
-import type { ValueObject } from "./ValueObject";
+import { createValueObjectFactory } from "../primitives";
+import type { ValueObject } from "../primitives";
 
 type Value = string;
 

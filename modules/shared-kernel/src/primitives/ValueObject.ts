@@ -1,6 +1,6 @@
-import type { Result } from "../Result";
-import { Guard } from "../Guard";
-import type { AnyRecord } from "../AnyRecord";
+import type { Result } from "./Result";
+import { Guard } from "./Guard";
+import type { AnyRecord } from "./AnyRecord";
 
 /**
  * [Value Objects](https://en.wikipedia.org/wiki/Value_object) are immutable entities whose value is completely determined by their attributes.

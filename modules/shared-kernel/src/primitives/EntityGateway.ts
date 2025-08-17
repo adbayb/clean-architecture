@@ -1,8 +1,8 @@
 import type { Result } from "@open-vanilla/result";
 
-import type { EntityGatewayBoundary } from "../entities/Entity";
-import type { Mapper } from "../Mapper";
-import type { AnyInput } from "../AnyInput";
+import type { Mapper } from "./Mapper";
+import type { EntityGatewayBoundary } from "./Entity";
+import type { AnyInput } from "./AnyInput";
 
 export type EntityGatewayFactory<
 	Output extends EntityGatewayBoundary,
