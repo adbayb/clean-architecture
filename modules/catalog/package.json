@@ -36,8 +36,8 @@
 	},
 	"devDependencies": {
 		"@clean-architecture/shared": "workspace:*",
-		"@types/react": "19.1.10",
-		"quickbundle": "2.13.0",
+		"@types/react": "19.1.14",
+		"quickbundle": "2.14.0",
 		"react": "19.1.1",
 		"vitest": "3.2.4"
 	},
