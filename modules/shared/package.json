@@ -35,13 +35,13 @@
 		"watch": "quickbundle watch"
 	},
 	"dependencies": {
-		"@chakra-ui/react": "^3.27.0",
+		"@chakra-ui/react": "^3.28.1",
 		"@emotion/react": "^11.14.0",
 		"@open-vanilla/result": "^3.0.0"
 	},
 	"devDependencies": {
-		"quickbundle": "2.14.0",
-		"react": "19.1.1",
+		"quickbundle": "2.15.0",
+		"react": "19.2.0",
 		"vitest": "3.2.4"
 	},
 	"peerDependencies": {
