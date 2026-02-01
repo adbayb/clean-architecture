@@ -11,13 +11,13 @@
 	"dependencies": {
 		"@clean-architecture/catalog": "workspace:^",
 		"@clean-architecture/shared": "workspace:^",
-		"react": "^19.2.0",
-		"react-dom": "^19.2.0"
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4"
 	},
 	"devDependencies": {
-		"@types/react": "19.2.7",
+		"@types/react": "19.2.10",
 		"@types/react-dom": "19.2.3",
 		"@vitejs/plugin-react-swc": "4.2.2",
-		"vite": "7.2.4"
+		"vite": "7.3.1"
 	}
 }
