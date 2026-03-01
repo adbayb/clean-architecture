@@ -35,7 +35,7 @@
 		"watch": "quickbundle watch"
 	},
 	"dependencies": {
-		"@chakra-ui/react": "^3.31.0",
+		"@chakra-ui/react": "^3.33.0",
 		"@emotion/react": "^11.14.0",
 		"@open-vanilla/result": "^3.0.0"
 	},
