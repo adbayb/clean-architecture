@@ -18,7 +18,7 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
             - uses: pnpm/action-setup@v6
             - name: Get node version
               run: echo "version=$(cat .nvmrc)" >> $GITHUB_OUTPUT
@@ -39,7 +39,7 @@ jobs:
               run: pnpm install --frozen-lockfile
             - name: Create release pull request
               if: "!contains(github.event.head_commit.message, 'chore: release package(s)')"
-              uses: changesets/action@v1
+              uses: changesets/action@v2.1.1
               with:
                   commit: "chore: release package(s)"
                   title: "chore: release package(s)"
@@ -47,7 +47,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Publish stable version(s)
               if: "contains(github.event.head_commit.message, 'chore: release package(s)')"
-              uses: changesets/action@v1
+              uses: changesets/action@v2.1.1
               with:
                   version: pnpm release:version
                   publish: exit 0
