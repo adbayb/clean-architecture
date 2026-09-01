@@ -1,6 +1,6 @@
 {
 	"name": "@clean-architecture/shared",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"private": true,
 	"description": "A clean architecture example to enforce a loosely coupled business logic",
 	"homepage": "https://github.com/adbayb/clean-architecture/tree/main/clean-architecture#readme",
