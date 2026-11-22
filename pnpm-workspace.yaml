@@ -1,3 +1,27 @@
 packages:
     - "hosts/*"
     - "modules/*"
+saveExact: true
+verifyDepsBeforeRun: "warn"
+update:
+    githubActions: true
+publicHoistPattern:
+    - "*changesets*"
+    - "*commitlint*"
+    - "*oxfmt*"
+    - "*oxlint*"
+    - "*turbo*"
+    - "*typescript*"
+    - "*types*"
+permissions:
+    esbuild:
+        build: true
+    "@swc/core":
+        build: true
+    "@adbayb/stack":
+        skills: true
+minimumReleaseAgeExclude:
+    - "@adbayb/*"
+skills:
+    dirs:
+        - .agents/skills

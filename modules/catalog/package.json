@@ -5,15 +5,18 @@
 	"description": "A clean architecture example to enforce a loosely coupled business logic",
 	"homepage": "https://github.com/adbayb/clean-architecture/tree/main/clean-architecture#readme",
 	"bugs": "https://github.com/adbayb/clean-architecture/issues",
+	"license": "MIT",
+	"author": "Ayoub Adib <adbayb@gmail.com> (https://twitter.com/adbayb)",
 	"repository": {
 		"type": "git",
 		"url": "git@github.com:adbayb/clean-architecture.git",
 		"directory": "modules/catalog"
 	},
-	"license": "MIT",
-	"author": "Ayoub Adib <adbayb@gmail.com> (https://twitter.com/adbayb)",
-	"sideEffects": false,
+	"files": [
+		"dist"
+	],
 	"type": "module",
+	"sideEffects": false,
 	"exports": {
 		".": {
 			"source": "./src/index.ts",
@@ -23,9 +26,6 @@
 			"default": "./dist/index.mjs"
 		}
 	},
-	"files": [
-		"dist"
-	],
 	"scripts": {
 		"build": "pnpm clean && quickbundle build",
 		"clean": "rm -rf dist",
@@ -36,10 +36,10 @@
 	},
 	"devDependencies": {
 		"@clean-architecture/shared": "workspace:*",
-		"@types/react": "19.2.14",
-		"quickbundle": "2.16.0",
-		"react": "19.2.4",
-		"vitest": "4.1.5"
+		"@types/react": "19.3.0",
+		"quickbundle": "3.2.2",
+		"react": "19.3.1",
+		"vitest": "5.1.1"
 	},
 	"peerDependencies": {
 		"@clean-architecture/shared": "^0.0.0",

@@ -1,2 +1,2 @@
-export { GetProductsView } from "./GetProducts";
-export { ProductEntityGatewayProvider } from "./Product";
+export { GetProductsView } from "./get-products";
+export { ProductEntityGatewayProvider } from "./product";

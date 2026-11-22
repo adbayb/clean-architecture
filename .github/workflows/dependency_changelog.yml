@@ -7,12 +7,14 @@ on:
 
 jobs:
     main:
+        if: github.actor == 'renovate[bot]'
+        permissions:
+            contents: write
         timeout-minutes: 5
         runs-on: ubuntu-latest
-        if: github.actor == 'renovate[bot]'
         steps:
             - name: Checkout
-              uses: actions/checkout@v7
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
                   fetch-depth: 2
                   ref: ${{ github.head_ref }}
@@ -21,7 +23,7 @@ jobs:
                   git config --global user.email adbayb@gmail.com
                   git config --global user.name 'Ayoub Adib'
             - name: Create changelog entry
-              uses: actions/github-script@v9
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
               # Credits to https://github.com/backstage/backstage/blob/bcc11651add5a2589898dfb9d665ebb9d412201b/.github/workflows/sync_renovate-changesets.yml
               with:
                   script: |

@@ -8,23 +8,28 @@
 		"check": "stack check",
 		"clean": "stack clean",
 		"fix": "stack fix",
-		"prepare": "stack install",
-		"release:log": "stack release --log",
+		"install": "stack install",
+		"release:changelog": "stack release --changelog",
 		"release:publish": "stack release --publish",
-		"release:version": "stack release --tag",
+		"release:snapshot": "stack release --snapshot",
+		"release:version": "stack release --bump",
 		"start": "stack start",
 		"test": "stack test",
 		"watch": "stack watch"
 	},
-	"prettier": "@adbayb/stack/prettier",
 	"devDependencies": {
-		"@adbayb/stack": "2.32.1"
+		"@adbayb/stack": "3.8.2"
 	},
-	"packageManager": "pnpm@10.34.9",
-	"engines": {
-		"node": ">=22.0.0",
-		"npm": "please-use-pnpm",
-		"pnpm": ">=9.0.0",
-		"yarn": "please-use-pnpm"
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "12.21.0",
+			"onFail": "download"
+		},
+		"runtime": {
+			"name": "node",
+			"version": "26.13.1",
+			"onFail": "error"
+		}
 	}
 }
