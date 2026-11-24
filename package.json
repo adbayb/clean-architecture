@@ -18,7 +18,9 @@
 		"watch": "stack watch"
 	},
 	"devDependencies": {
-		"@adbayb/stack": "3.8.2"
+		"@adbayb/stack": "3.8.2",
+		"eslint-import-resolver-typescript": "4.4.5",
+		"eslint-plugin-boundaries": "7.4.4"
 	},
 	"devEngines": {
 		"packageManager": {

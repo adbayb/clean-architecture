@@ -17,7 +17,7 @@ Furthermore, drawing inspiration from [the Vertical Slice Architecture](https://
 Feature directories use a verb-based name, such as `get-products`, and contain a use case and its supporting layers.
 Shared entity directories use a noun, such as `product`, and contain the entity, gateway adapters, and framework integrations.
 This organization helps [communicate the application's intent](https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html) and keeps business components discoverable and cohesive.
-Second-level directories are organized following the clean architecture layers to enforce/materialize the dependency rule and bring clarity about each layer scope.
+Second-level directories follow the Clean Architecture layers; lint rules check their direct dependencies.
 
 [^1]: In this repository, a [bounded context](https://martinfowler.com/bliki/BoundedContext.html) is implemented by one module, so a bounded context is equivalent to a module here. However, it's not always the case since [a bounded context is not strictly equivalent to a module](https://stackoverflow.com/a/77923055). Indeed, while a module is a technical-oriented concept that defines logical boundaries in the code, a [bounded context](https://deviq.com/domain-driven-design/bounded-context) is a business-oriented one (domain-driven design tactical pattern) that represents a [cohesive area of the business domain](https://ddd-practitioners.com/2023/03/07/the-difference-between-domains-subdomains-and-bounded-contexts/). A module is a technical enabler to implement a bounded context, which can contain one or multiple modules.
 
@@ -42,19 +42,21 @@ Second-level directories are organized following the clean architecture layers t
 
 **TODO: package diagram / choosen feature split (catalog, ...) with slice across the different layers.**
 
+- TODO: Explain the modular architecture, including module boundaries, public APIs, and dependency rules.
+
 #### A special module: the Shared Kernel.
 
-See [documentation](./modules/shared/).
+See [documentation](./clean-architecture/src/shared/).
 
 ### Layers
 
 ![Clean Architecture Layers](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg)
 
-- [Enterprise Business Rules (Entities)](./modules/catalog/src/entities/): TODO.
-- [Application Business Rules (Use Cases)](./modules/catalog/src/useCases/): TODO.
-- [Interface Adapters](./modules/catalog/src/adapters/): Concrete implementation of ports folder that can include entity gateways, interface for data source implemented framework side, other repository/service gateways and GUI design pattern implementation (MVC, MVVM, MVP, ...).
-- [Frameworks & Drivers](./modules/catalog/src/frameworks/): React views (and hooks), data source (including HttpDataSource to make fetch calls with error management, database client (Redis, SQL, MongoDB, ...), ...), ... TODO (include hosts (main component orchestrator)).
-- [Hosts](./hosts): Act like the configurator instance in the [Hexagonal Architecture](https://alistaircockburn.com/Hexagonal%20Budapest%2023-05-18.pdf). Under the Clean Architecture, the host layer is the outermost layer. It includes the initial entry point of the system called the main component in the Clean Architecture book (in the "Main Component" chapter). This layer is not depicted in the diagram shown above. The main component is on the driver side (for example, Web UI, CLI, Back-end server, ...) and is responsible to instantiate inner layers.
+- [Enterprise Business Rules (Entities)](./clean-architecture/src/modules/catalog/product/entities/): TODO.
+- [Application Business Rules (Use Cases)](./clean-architecture/src/modules/catalog/get-products/use-cases/): TODO.
+- [Interface Adapters](./clean-architecture/src/modules/catalog/product/adapters/): Concrete implementation of ports folder that can include entity gateways, interface for data source implemented framework side, other repository/service gateways and GUI design pattern implementation (MVC, MVVM, MVP, ...).
+- [Frameworks & Drivers](./clean-architecture/src/modules/catalog/product/frameworks/): React views (and hooks), data source (including HttpDataSource to make fetch calls with error management, database client (Redis, SQL, MongoDB, ...), ...), ... TODO (include hosts (main component orchestrator)).
+- [Hosts](./clean-architecture/src/hosts/): Act like the configurator instance in the [Hexagonal Architecture](https://alistaircockburn.com/Hexagonal%20Budapest%2023-05-18.pdf). Under the Clean Architecture, the host layer is the outermost layer. It includes the initial entry point of the system called the main component in the Clean Architecture book (in the "Main Component" chapter). This layer is not depicted in the diagram shown above. The main component is on the driver side (for example, Web UI, CLI, Back-end server, ...) and is responsible to instantiate inner layers.
 
 ### Components
 
@@ -101,6 +103,42 @@ This project prefers a functional programming style, using functions and composi
 Where practical, business rules are expressed as pure functions, with dependencies and I/O kept explicit, so they can be tested independently of the UI.
 Clean Architecture does not require a particular programming paradigm, and functions can encapsulate state through closures.
 Classes remain an option when an integration requires a class-based contract, such as a custom [React error boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary), or a library requires an instance of a specific class.
+
+### Could the modular monolith use separate packages?
+
+This project keeps the hosts, shared code, and modules in one application package.
+It is a modular monolith: modules organize the application by bounded context, while the application is deployed as one unit.
+The [Oxlint configuration](./oxlint.config.ts) uses [eslint-plugin-boundaries](https://github.com/javierbrea/eslint-plugin-boundaries) to check module and slice entry points and direct dependencies between layers.
+Inner layers access another slice's entities through its `entities/index.ts`, rather than its outer-layer entry point.
+These checks do not analyze dependencies hidden behind public barrels or dynamic import paths computed at runtime.
+Oxlint's [JavaScript plugin API](https://oxc.rs/docs/guide/usage/linter/js-plugins) is currently alpha.
+
+An alternative is to make the hosts, shared code, and each module separate workspace packages:
+
+```text
+hosts/web/
+modules/
+  catalog/
+  shared/
+```
+
+Packages make dependency declarations and public entry points explicit, and `exports` restricts package-name imports to the declared API.
+They also allow separate builds and dependency manifests, at the cost of more workspace configuration.
+Relative imports can still bypass package exports, and layer dependency rules need additional checks.
+
+Clean Architecture's layers are especially useful when complex, business-rule-intensive applications need to protect and evolve domain logic; simpler applications may not need the same structure.
+In larger applications involving multiple teams, package boundaries can make it easier to assign scoped code ownership and clarify team responsibilities.
+
+Other options include:
+
+- [Sheriff](https://github.com/sheriff-arch/sheriff): detects barrel-based modules and checks public exports; tags and dependency rules must be configured for layer direction.
+- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser): checks a dependency graph against custom rules and detects cycles.
+- [Fallow](https://github.com/fallow-rs/fallow): checks boundary zones and cycles alongside broader code-quality analysis; files belong to one zone, so nested boundaries need care.
+- [ArchUnitTS](https://github.com/LukasNiessen/ArchUnitTS): defines dependency and cycle rules as architecture tests, run with a test framework rather than the linter.
+- [Oxlint or ESLint `no-restricted-imports`](https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-restricted-imports): restricts import paths, but needs per-scope patterns for architectural rules.
+- [eslint-plugin-import-x](https://github.com/un-ts/eslint-plugin-import-x): provides path-resolved `no-restricted-paths` zones for forbidden dependencies.
+
+Any option needs rules tailored to the layout and checks for aliases, relative paths, type-only imports, and dynamic imports.
 
 <br>
 

@@ -1,6 +1,5 @@
 packages:
-    - "hosts/*"
-    - "modules/*"
+    - "clean-architecture"
 saveExact: true
 verifyDepsBeforeRun: "warn"
 update:
