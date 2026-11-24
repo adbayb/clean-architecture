@@ -5,6 +5,7 @@ export default {
 	jsPlugins: [...stackConfig.jsPlugins, "eslint-plugin-boundaries"],
 	rules: {
 		...stackConfig.rules,
+		// Enforce architecture boundaries and Clean Architecture dependency rules for direct imports.
 		"boundaries/dependencies": [
 			"error",
 			{

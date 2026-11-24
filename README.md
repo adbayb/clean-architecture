@@ -108,10 +108,9 @@ Classes remain an option when an integration requires a class-based contract, su
 
 This project keeps the hosts, shared code, and modules in one application package.
 It is a modular monolith: modules organize the application by bounded context, while the application is deployed as one unit.
-The [Oxlint configuration](./oxlint.config.ts) uses [eslint-plugin-boundaries](https://github.com/javierbrea/eslint-plugin-boundaries) to check module and slice entry points and direct dependencies between layers.
+The [Oxlint configuration](./oxlint.config.ts) uses [eslint-plugin-boundaries](https://github.com/javierbrea/eslint-plugin-boundaries) to enforce module and slice boundaries and check direct imports against Clean Architecture's layer dependency rules.
 Inner layers access another slice's entities through its `entities/index.ts`, rather than its outer-layer entry point.
 These checks do not analyze dependencies hidden behind public barrels or dynamic import paths computed at runtime.
-Oxlint's [JavaScript plugin API](https://oxc.rs/docs/guide/usage/linter/js-plugins) is currently alpha.
 
 An alternative is to make the hosts, shared code, and each module separate workspace packages:
 
@@ -123,13 +122,10 @@ modules/
 ```
 
 Packages make dependency declarations and public entry points explicit, and `exports` restricts package-name imports to the declared API.
-They also allow separate builds and dependency manifests, at the cost of more workspace configuration.
-Relative imports can still bypass package exports, and layer dependency rules need additional checks.
+They also allow separate builds and dependency manifests and can support ownership boundaries within or across teams.
+However, packages require more workspace configuration, relative imports can still bypass package exports, and layer dependency rules need additional checks.
 
-Clean Architecture's layers are especially useful when complex, business-rule-intensive applications need to protect and evolve domain logic; simpler applications may not need the same structure.
-In larger applications involving multiple teams, package boundaries can make it easier to assign scoped code ownership and clarify team responsibilities.
-
-Other options include:
+Alternatives to `eslint-plugin-boundaries` for checking architecture boundaries and dependency rules include:
 
 - [Sheriff](https://github.com/sheriff-arch/sheriff): detects barrel-based modules and checks public exports; tags and dependency rules must be configured for layer direction.
 - [dependency-cruiser](https://github.com/sverweij/dependency-cruiser): checks a dependency graph against custom rules and detects cycles.

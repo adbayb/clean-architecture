@@ -15,8 +15,6 @@ publicHoistPattern:
 permissions:
     esbuild:
         build: true
-    "@swc/core":
-        build: true
     "@adbayb/stack":
         skills: true
 minimumReleaseAgeExclude:
