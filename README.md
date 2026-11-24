@@ -31,32 +31,84 @@ Second-level directories follow the Clean Architecture layers; lint rules check 
 
 ### Overview
 
-**TODO:**
+The web host displays a catalog of products retrieved from [DummyJSON](https://dummyjson.com/).
+The catalog module contains the `get-products` feature and the shared `product` entity unit.
+The `bookmark` module is a placeholder: the host's Bookmark button currently only logs a message.
 
-- Functional view (main modules and features).
-- Architecture diagram with control flow following Clean architecture diagram (from the book:
+The following diagram shows the runtime flow when the catalog view loads, not the direction of source-code dependencies:
 
-![Component diagram](https://github.com/user-attachments/assets/ab153b72-981b-428f-a2b2-fad515e3acf9)
+```mermaid
+sequenceDiagram
+    participant View as Catalog view
+    participant Controller
+    participant UseCase as Get products use case
+    participant Gateway as Product gateway
+    participant DataSource as DummyJSON data source
+    participant API as DummyJSON API
+    participant Presenter
+
+    View->>Controller: execute
+    Controller->>UseCase: execute
+    UseCase->>Gateway: getMany
+    Gateway->>DataSource: readMany
+    DataSource->>API: GET /products/
+    API-->>DataSource: products or error
+    DataSource-->>Gateway: product data or error
+    Gateway-->>UseCase: product entities or errors
+    UseCase->>Presenter: display output
+    Presenter-->>View: update view model
+```
+
+The use case calls the gateway and presenter through interfaces owned by the inner layers.
+Runtime calls can cross outward through these interfaces while source dependencies point inward.
 
 ### Modules
 
-**TODO: package diagram / choosen feature split (catalog, ...) with slice across the different layers.**
+The application is a single package containing a web host, business modules, and shared code:
 
-- TODO: Explain the modular architecture, including module boundaries, public APIs, and dependency rules.
+```text
+clean-architecture/src/
+  hosts/web/                       # React entry point and composition
+  modules/
+    catalog/
+      index.ts                     # Module API
+      get-products/
+        adapters/                  # Controller, presenter, view model
+        frameworks/                # React view
+        use-cases/                 # Get products interactor
+        index.ts                   # Feature API
+      product/
+        adapters/                  # Product gateway
+        entities/                  # Entity and inner-facing API
+        frameworks/                # Data source and gateway provider
+        index.ts                   # Product unit API
+    bookmark/                      # Placeholder
+  shared/                          # Shared entities, primitives, design system
+```
 
-#### A special module: the Shared Kernel.
+Each implemented module owns its business capability and exposes a public API through its `index.ts`.
+The web host imports the catalog API; modules access other modules through their public APIs rather than their internals.
+Within a module, feature and entity units expose entry points for collaboration: for example, the `get-products` use case imports the product gateway contract from `product/entities/index.ts`, while its React view uses the product unit's outer entry point.
+The shared code is accessed through `shared/index.ts` and does not depend on business modules or hosts.
 
-See [documentation](./clean-architecture/src/shared/).
+The intended source dependency direction is frameworks and drivers to interface adapters, then use cases, then entities.
+The [Oxlint boundary rules](./oxlint.config.ts) check module and unit entry points and direct imports between categorized layers.
+They do not follow dependencies through public barrels, check external framework imports, or analyze dynamically computed import paths.
+
+#### Shared code
+
+The [shared directory](./clean-architecture/src/shared/) contains value objects, common primitives, and a design system.
+Its README describes the shared kernel concept; not everything in this directory is domain code.
 
 ### Layers
 
 ![Clean Architecture Layers](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg)
 
-- [Enterprise Business Rules (Entities)](./clean-architecture/src/modules/catalog/product/entities/): TODO.
-- [Application Business Rules (Use Cases)](./clean-architecture/src/modules/catalog/get-products/use-cases/): TODO.
-- [Interface Adapters](./clean-architecture/src/modules/catalog/product/adapters/): Concrete implementation of ports folder that can include entity gateways, interface for data source implemented framework side, other repository/service gateways and GUI design pattern implementation (MVC, MVVM, MVP, ...).
-- [Frameworks & Drivers](./clean-architecture/src/modules/catalog/product/frameworks/): React views (and hooks), data source (including HttpDataSource to make fetch calls with error management, database client (Redis, SQL, MongoDB, ...), ...), ... TODO (include hosts (main component orchestrator)).
-- [Hosts](./clean-architecture/src/hosts/): Act like the configurator instance in the [Hexagonal Architecture](https://alistaircockburn.com/Hexagonal%20Budapest%2023-05-18.pdf). Under the Clean Architecture, the host layer is the outermost layer. It includes the initial entry point of the system called the main component in the Clean Architecture book (in the "Main Component" chapter). This layer is not depicted in the diagram shown above. The main component is on the driver side (for example, Web UI, CLI, Back-end server, ...) and is responsible to instantiate inner layers.
+- [Enterprise business rules (entities)](./clean-architecture/src/modules/catalog/product/entities/): Define domain entities, their validation, and the gateway contracts needed to access them. The product entity uses shared value objects for identity, creation date, and price.
+- [Application business rules (use cases)](./clean-architecture/src/modules/catalog/get-products/use-cases/): Coordinate application behavior through inner-owned contracts. The get-products interactor obtains products from a gateway and sends output to a presenter.
+- [Interface adapters](./clean-architecture/src/modules/catalog/get-products/adapters/): Translate between use cases and external representations. The controller invokes the interactor, the presenter formats its output for the view, and the [product gateway](./clean-architecture/src/modules/catalog/product/adapters/) converts data-source records into entities.
+- [Frameworks and drivers](./clean-architecture/src/modules/catalog/product/frameworks/): Integrate external technologies. The example uses a React view and provider and a DummyJSON network data source.
+- [Hosts](./clean-architecture/src/hosts/): Form the outermost layer, providing entry points and composing the application. Similar to the configurator in [Hexagonal Architecture](https://alistaircockburn.com/Hexagonal%20Budapest%2023-05-18.pdf), the host includes the main component described in the Clean Architecture book. It sits on the driver side, such as a web UI, CLI, or back-end server, and wires the inner layers. The host is not depicted in the diagram above. Here, the web host renders the catalog view inside the product gateway provider; the provider constructs the gateway and data source.
 
 ### Components
 
