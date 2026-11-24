@@ -95,6 +95,13 @@ This approach to organizing source code will also work, but be aware of the pote
 It’s what I call the "Périphérique antipattern of ports and adapters". The city of Paris, France, has a ring road called the Boulevard Périphérique, which allows you to circumnavigate Paris without entering the complexities of the city.  
 Having all of your infrastructure code in a single source code tree means that it’s potentially possible for infrastructure code in one area of your application (e.g., a web controller) to directly call code in another area of your application (e.g., a database repository), without navigating through the domain. This is especially true if you’ve forgotten to apply appropriate access modifiers to that code.
 
+### Why prefer a functional programming style?
+
+This project prefers a functional programming style, using functions and composition for consistency with common React and Vue frontend patterns.
+Where practical, business rules are expressed as pure functions, with dependencies and I/O kept explicit, so they can be tested independently of the UI.
+Clean Architecture does not require a particular programming paradigm, and functions can encapsulate state through closures.
+Classes remain an option when an integration requires a class-based contract, such as a custom [React error boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary), or a library requires an instance of a specific class.
+
 <br>
 
 ## 📚 Resources
